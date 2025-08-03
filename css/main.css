@@ -189,25 +189,197 @@ body {
     justify-content: center;
     font-size: 2rem;
     cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px var(--shadow);
-    animation: float 3s ease-in-out infinite;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 15px var(--shadow),
+        0 8px 25px rgba(255, 107, 157, 0.3),
+        0 0 0 0 rgba(255, 107, 157, 0.7);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .bubble:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px var(--shadow);
+    transform: scale(1.15) translateY(-8px);
+    box-shadow: 
+        0 8px 25px var(--shadow),
+        0 12px 35px rgba(255, 107, 157, 0.4),
+        0 0 0 0 rgba(255, 107, 157, 0.9);
 }
 
-.bubble:nth-child(2) { animation-delay: 0.5s; }
-.bubble:nth-child(3) { animation-delay: 1s; }
-.bubble:nth-child(4) { animation-delay: 1.5s; }
-.bubble:nth-child(5) { animation-delay: 2s; }
-.bubble:nth-child(6) { animation-delay: 2.5s; }
+.bubble:active {
+    transform: scale(0.95) translateY(-2px);
+    transition: all 0.1s ease;
+    box-shadow: 
+        0 2px 8px var(--shadow),
+        0 4px 15px rgba(255, 107, 157, 0.2);
+}
 
+/* Emoji animations on hover */
+.bubble:hover::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    animation: ripple 0.6s ease-out;
+    pointer-events: none;
+}
+
+/* Individual emoji animations */
+.bubble:nth-child(1):hover { animation: pulse 1s infinite; }
+.bubble:nth-child(2):hover { animation: spin 2s linear infinite; }
+.bubble:nth-child(3):hover { animation: bounce 1s infinite; }
+.bubble:nth-child(4):hover { animation: sparkle 1.5s infinite; }
+.bubble:nth-child(5):hover { animation: heartBeat 1s infinite; }
+.bubble:nth-child(6):hover { animation: party 2s infinite; }
+
+/* Staggered animation delays for initial load */
+.bubble:nth-child(1) { animation-delay: 0s; }
+.bubble:nth-child(2) { animation-delay: 0.2s; }
+.bubble:nth-child(3) { animation-delay: 0.4s; }
+.bubble:nth-child(4) { animation-delay: 0.6s; }
+.bubble:nth-child(5) { animation-delay: 0.8s; }
+.bubble:nth-child(6) { animation-delay: 1s; }
+
+/* Floating animation */
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    25% { 
+        transform: translateY(-8px) rotate(1deg); 
+    }
+    50% { 
+        transform: translateY(-4px) rotate(-1deg); 
+    }
+    75% { 
+        transform: translateY(-12px) rotate(0.5deg); 
+    }
+}
+
+/* Ripple effect */
+@keyframes ripple {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Emoji-specific animations */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
+}
+
+@keyframes sparkle {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg); 
+        filter: brightness(1);
+    }
+    25% { 
+        transform: scale(1.1) rotate(90deg); 
+        filter: brightness(1.2);
+    }
+    50% { 
+        transform: scale(1.05) rotate(180deg); 
+        filter: brightness(1.1);
+    }
+    75% { 
+        transform: scale(1.15) rotate(270deg); 
+        filter: brightness(1.3);
+    }
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    70% { transform: scale(1); }
+}
+
+@keyframes party {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg); 
+    }
+    25% { 
+        transform: scale(1.1) rotate(5deg); 
+    }
+    50% { 
+        transform: scale(1.05) rotate(-3deg); 
+    }
+    75% { 
+        transform: scale(1.15) rotate(8deg); 
+    }
+}
+
+/* Continuous floating animation */
+.bubble {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Disable animations for checked-in bubbles */
+.bubble.checked-in {
+    animation: none;
+    cursor: default;
+}
+
+.bubble.checked-in:hover {
+    transform: none;
+    animation: none;
+}
+
+.bubble.checked-in:hover::before {
+    display: none;
+}
+
+/* Guest name styling in bubbles */
+.bubble .guest-name {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+    line-height: 1.2;
+    word-wrap: break-word;
+    max-width: 100%;
+    display: block;
+    padding: 4px;
+}
+
+/* Responsive adjustments for guest names */
+@media (max-width: 375px) {
+    .bubble .guest-name {
+        font-size: 0.7rem;
+        padding: 2px;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 428px) {
+    .bubble .guest-name {
+        font-size: 0.9rem;
+        padding: 6px;
+    }
 }
 
 .checkin-form {
@@ -522,5 +694,783 @@ body {
     
     .section-title {
         font-size: 1.8rem;
+    }
+} 
+
+/* ===== GREETING MODAL ===== */
+.greeting-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.greeting-content {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 32px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 90%;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.greeting-content h2 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    margin: 0 0 16px 0;
+    color: white;
+    line-height: 1.2;
+}
+
+.greeting-content p {
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+}
+
+.greeting-content p:last-of-type {
+    margin-bottom: 24px;
+}
+
+.greeting-emoji {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    animation: bounce 1s ease;
+}
+
+.greeting-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.greeting-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive greeting modal */
+@media (max-width: 375px) {
+    .greeting-content {
+        padding: 24px;
+    }
+    
+    .greeting-emoji {
+        font-size: 3rem;
+    }
+    
+    .greeting-content h2 {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 428px) {
+    .greeting-content {
+        padding: 28px;
+    }
+    
+    .greeting-emoji {
+        font-size: 3.5rem;
+    }
+} 
+
+/* ===== ADD BUBBLE BUTTON ===== */
+.add-bubble-container {
+    text-align: center;
+    margin: var(--spacing-xl) 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh; /* Take up at least half the viewport height */
+    perspective: 1000px; /* Add perspective for 3D effects */
+}
+
+.add-bubble-btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--text);
+    border: none;
+    border-radius: 50%;
+    width: 280px; /* Much bigger - about half the page width */
+    height: 280px; /* Much bigger - about half the page width */
+    font-size: 1.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: gentleFloat 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin: 0 auto;
+    /* Enhanced drop shadows for dramatic floating effect */
+    box-shadow: 
+        0 8px 25px rgba(255, 107, 157, 0.4),
+        0 12px 35px rgba(78, 205, 196, 0.3),
+        0 16px 45px rgba(0, 0, 0, 0.15),
+        0 20px 55px rgba(255, 107, 157, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* 3D transform origin */
+    transform-origin: center center;
+}
+
+.add-bubble-btn:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 
+        0 12px 35px rgba(255, 107, 157, 0.5),
+        0 18px 45px rgba(78, 205, 196, 0.4),
+        0 24px 55px rgba(0, 0, 0, 0.2),
+        0 30px 65px rgba(255, 107, 157, 0.3);
+}
+
+.add-bubble-btn:active {
+    transform: translateY(-4px) scale(0.98);
+    transition: all 0.1s ease;
+    box-shadow: 
+        0 6px 20px rgba(255, 107, 157, 0.3),
+        0 10px 30px rgba(78, 205, 196, 0.25),
+        0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Soft ripple effect */
+.add-bubble-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+.add-bubble-btn:hover::before {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Content Layer */
+.add-bubble-btn > * {
+    position: relative;
+    z-index: 2;
+}
+
+.add-icon {
+    font-size: 7rem; /* Much bigger + sign */
+    font-weight: 300; /* Lighter weight for elegance */
+    color: var(--white); /* White for contrast against gradient */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60%; /* Takes up more space for better centering */
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 45%; /* Slightly higher than center */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Soft rounded plus sign using CSS */
+    width: 120px;
+    height: 120px;
+    font-size: 0; /* Hide the text + sign */
+}
+
+.add-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 12px;
+    background: var(--white); /* White to match font color */
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.add-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 60px;
+    background: var(--white); /* White to match font color */
+    border-radius: 6px;
+}
+
+.add-text {
+    font-family: 'Dancing Script', cursive; /* Cursive font */
+    font-size: 1.6rem; /* Slightly bigger text */
+    line-height: 1.2;
+    font-weight: 900; /* Maximum bold weight for maximum visibility */
+    font-stretch: condensed; /* Make font thicker */
+    color: var(--white); /* White for contrast against gradient */
+    text-align: center;
+    text-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        0 2px 6px rgba(0, 0, 0, 0.2);
+    white-space: nowrap; /* Prevent text wrapping */
+    letter-spacing: -0.5px; /* Tighter letter spacing for thicker appearance */
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Gentle 3D Floating Animation */
+@keyframes gentleFloat {
+    0%, 100% { 
+        transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); 
+    }
+    25% { 
+        transform: translateY(-8px) rotateX(1deg) rotateY(-0.5deg) scale(1.01); 
+    }
+    50% { 
+        transform: translateY(-4px) rotateX(-0.5deg) rotateY(0.5deg) scale(0.99); 
+    }
+    75% { 
+        transform: translateY(-12px) rotateX(0.5deg) rotateY(-1deg) scale(1.005); 
+    }
+}
+
+/* Soft 3D Ripple Animation */
+@keyframes ripple {
+    0% {
+        transform: translate(-50%, -50%) scale(0) translateZ(0px);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) translateZ(20px);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5) translateZ(30px);
+        opacity: 0;
+    }
+}
+
+/* ===== BUBBLE MODAL ===== */
+.bubble-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ===== CELEBRATION CHOICE ===== */
+.celebration-choice {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    justify-content: center;
+}
+
+.choice-btn {
+    background: var(--white);
+    border: 3px solid var(--background);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    position: relative;
+    overflow: hidden;
+}
+
+.choice-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 25px var(--shadow);
+}
+
+.choice-btn.selected {
+    border-color: var(--primary);
+    background: rgba(255, 107, 157, 0.1);
+    transform: translateY(-2px) scale(1.1);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.jacky-choice.selected {
+    border-color: #4ECDC4;
+    background: rgba(78, 205, 196, 0.1);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3);
+}
+
+.eunice-choice.selected {
+    border-color: var(--primary);
+    background: rgba(255, 107, 157, 0.1);
+    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+}
+
+.choice-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+}
+
+.choice-btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.choice-emoji {
+    font-size: 2rem;
+    z-index: 1;
+    position: relative;
+}
+
+.choice-text {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.9rem;
+    z-index: 1;
+    position: relative;
+}
+
+/* ===== FORM SECTION ===== */
+.form-section {
+    margin-top: var(--spacing-lg);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.95rem;
+}
+
+.name-input,
+.emoji-input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 2px solid var(--primary);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-family: var(--font-body);
+    transition: border-color 0.3s ease;
+}
+
+.name-input:focus,
+.emoji-input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.btn-secondary {
+    background: var(--background);
+    color: var(--text);
+    border: 2px solid var(--text);
+    flex: 1;
+}
+
+.btn-secondary:hover {
+    background: var(--text);
+    color: var(--white);
+}
+
+/* ===== DYNAMIC BUBBLES ===== */
+.bubble-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: var(--spacing-md);
+    margin: var(--spacing-xl) 0;
+    min-height: 200px;
+}
+
+.bubble {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 15px var(--shadow),
+        0 8px 25px rgba(255, 107, 157, 0.3);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    animation: bubbleAppear 0.6s ease-out;
+}
+
+.bubble.jacky-bubble {
+    background: linear-gradient(135deg, #4ECDC4, #44A08D);
+}
+
+.bubble.eunice-bubble {
+    background: linear-gradient(135deg, var(--primary), #FF8FB1);
+}
+
+@keyframes bubbleAppear {
+    0% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(90deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+} 
+
+/* ===== BUBBLE CONTENT ===== */
+.bubble-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+}
+
+.bubble-name {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+    word-wrap: break-word;
+    max-width: 100%;
+    margin-bottom: 4px;
+}
+
+.bubble-emoji {
+    font-size: 1rem;
+    margin-top: 2px;
+}
+
+/* Responsive bubble content */
+@media (max-width: 375px) {
+    .bubble-name {
+        font-size: 0.7rem;
+    }
+    
+    .bubble-emoji {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 428px) {
+    .bubble-name {
+        font-size: 0.9rem;
+    }
+    
+    .bubble-emoji {
+        font-size: 1.1rem;
+    }
+} 
+
+/* ===== BUBBLE STYLING ===== */
+.bubble-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-lg);
+}
+
+.bubble {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    animation: bubbleAppear 0.6s ease-out;
+    min-width: 140px;
+    min-height: 140px;
+    /* 3D Effects */
+    background: linear-gradient(145deg, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(255, 255, 255, 0.7) 50%, 
+        rgba(255, 255, 255, 0.4) 100%);
+    box-shadow: 
+        /* Inner shadow for depth */
+        inset 0 2px 4px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+        /* Outer shadow for 3D lift */
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 12px 35px rgba(255, 107, 157, 0.3),
+        0 0 0 0 rgba(255, 107, 157, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.bubble:hover {
+    transform: scale(1.15) translateY(-12px) rotate(2deg);
+    box-shadow: 
+        /* Enhanced inner shadow */
+        inset 0 3px 6px rgba(255, 255, 255, 0.9),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
+        /* Enhanced outer shadow for 3D lift */
+        0 12px 35px rgba(0, 0, 0, 0.2),
+        0 16px 45px rgba(255, 107, 157, 0.4),
+        0 0 0 0 rgba(255, 107, 157, 0.9);
+}
+
+.bubble:active {
+    transform: scale(0.95) translateY(-4px) rotate(1deg);
+    transition: all 0.1s ease;
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        0 6px 20px rgba(255, 107, 157, 0.2);
+}
+
+/* 3D Bubble Content */
+.bubble-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-sm);
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.bubble-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-xs);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    word-wrap: break-word;
+    max-width: 90%;
+}
+
+.bubble-emoji {
+    font-size: 1.5rem;
+    margin-top: var(--spacing-xs);
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* 3D Bubble Variants */
+.jacky-bubble {
+    background: linear-gradient(145deg, 
+        rgba(78, 205, 196, 0.9) 0%, 
+        rgba(78, 205, 196, 0.7) 50%, 
+        rgba(78, 205, 196, 0.4) 100%);
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 12px 35px rgba(78, 205, 196, 0.3),
+        0 0 0 0 rgba(78, 205, 196, 0.7);
+}
+
+.jacky-bubble:hover {
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.9),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
+        0 12px 35px rgba(0, 0, 0, 0.2),
+        0 16px 45px rgba(78, 205, 196, 0.4),
+        0 0 0 0 rgba(78, 205, 196, 0.9);
+}
+
+.eunice-bubble {
+    background: linear-gradient(145deg, 
+        rgba(255, 107, 157, 0.9) 0%, 
+        rgba(255, 107, 157, 0.7) 50%, 
+        rgba(255, 107, 157, 0.4) 100%);
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 12px 35px rgba(255, 107, 157, 0.3),
+        0 0 0 0 rgba(255, 107, 157, 0.7);
+}
+
+.eunice-bubble:hover {
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.9),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
+        0 12px 35px rgba(0, 0, 0, 0.2),
+        0 16px 45px rgba(255, 107, 157, 0.4),
+        0 0 0 0 rgba(255, 107, 157, 0.9);
+}
+
+/* 3D Ripple Effect */
+.bubble::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bubble:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Individual emoji animations on hover */
+.bubble:nth-child(1):hover { animation: pulse 1s infinite; }
+.bubble:nth-child(2):hover { animation: spin 2s linear infinite; }
+.bubble:nth-child(3):hover { animation: bounce 1s infinite; }
+.bubble:nth-child(4):hover { animation: sparkle 1.5s infinite; }
+.bubble:nth-child(5):hover { animation: heartBeat 1s infinite; }
+.bubble:nth-child(6):hover { animation: party 2s infinite; }
+
+/* Enhanced 3D Floating animation */
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    25% { 
+        transform: translateY(-8px) rotate(1deg); 
+    }
+    50% { 
+        transform: translateY(-4px) rotate(-1deg); 
+    }
+    75% { 
+        transform: translateY(-12px) rotate(0.5deg); 
+    }
+}
+
+/* Enhanced 3D bubble appear animation */
+@keyframes bubbleAppear {
+    0% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(90deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
     }
 } 

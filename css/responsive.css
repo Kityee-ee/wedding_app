@@ -13,7 +13,22 @@
     }
     
     .bubble {
-        font-size: 1.5rem;
+        min-width: 120px;
+        min-height: 120px;
+        font-size: 1rem;
+    }
+    
+    .bubble-name {
+        font-size: 0.9rem;
+    }
+    
+    .bubble-emoji {
+        font-size: 1.2rem;
+    }
+    
+    .bubble-container {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: var(--spacing-md);
     }
     
     .nav-title {
@@ -23,20 +38,105 @@
     .nav-date {
         font-size: 0.8rem;
     }
+    
+    /* Soft elegant button adjustments */
+    .add-bubble-btn {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .add-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .add-icon::before {
+        width: 40px;
+        height: 8px;
+        border-radius: 4px;
+    }
+    
+    .add-icon::after {
+        width: 8px;
+        height: 40px;
+        border-radius: 4px;
+    }
+    
+    .add-text {
+        font-size: 1.3rem;
+        bottom: 15%;
+    }
+    
+    .choice-btn {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .choice-emoji {
+        font-size: 1.5rem;
+    }
+    
+    .choice-text {
+        font-size: 0.8rem;
+    }
 }
 
 /* Medium Mobile (376px - 428px) */
 @media (min-width: 376px) and (max-width: 428px) {
     .bubble-container {
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
         gap: var(--spacing-lg);
     }
     
     .bubble {
-        font-size: 2.5rem;
+        min-width: 130px;
+        min-height: 130px;
+        font-size: 1.1rem;
+    }
+    
+    .bubble-name {
+        font-size: 0.95rem;
+    }
+    
+    .bubble-emoji {
+        font-size: 1.3rem;
     }
     
     .section-title {
         font-size: 2.2rem;
+    }
+    
+    /* Soft elegant button adjustments */
+    .add-bubble-btn {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .add-icon {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .add-icon::before {
+        width: 50px;
+        height: 10px;
+        border-radius: 5px;
+    }
+    
+    .add-icon::after {
+        width: 10px;
+        height: 50px;
+        border-radius: 5px;
+    }
+    
+    .add-text {
+        font-size: 1.5rem;
+        bottom: 18%;
+    }
+    
+    .choice-btn {
+        width: 90px;
+        height: 90px;
     }
 }
 
@@ -46,6 +146,14 @@
     .bubble {
         min-height: 60px;
         min-width: 60px;
+    }
+    
+    .bubble:hover {
+        transform: scale(1.1) translateY(-4px);
+    }
+    
+    .bubble:active {
+        transform: scale(0.9) translateY(-1px);
     }
     
     .btn {
@@ -103,20 +211,24 @@
     }
 }
 
-/* Reduced Motion */
+/* Reduced Motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .bubble {
+        animation: none !important;
+        transition: none !important;
     }
     
-    .bubble {
-        animation: none;
+    .bubble:hover {
+        transform: scale(1.05) !important;
+        animation: none !important;
+    }
+    
+    .bubble:hover::before {
+        display: none !important;
     }
     
     .loading-heart {
-        animation: none;
+        animation: none !important;
     }
 }
 

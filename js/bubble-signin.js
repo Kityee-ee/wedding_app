@@ -1,130 +1,117 @@
-// ===== BUBBLE SIGN-IN FUNCTIONALITY =====
+// ===== DYNAMIC BUBBLE SIGN-IN FUNCTIONALITY =====
 
-class BubbleSignIn {
+class DynamicBubbleSignIn {
     constructor() {
-        this.bubbles = document.querySelectorAll('.bubble');
-        this.checkinForm = document.getElementById('checkin-form');
-        this.nameInput = document.getElementById('guest-name');
-        this.submitButton = document.getElementById('submit-checkin');
-        this.checkedInGuests = [];
+        this.addBubbleBtn = document.getElementById('add-bubble-btn');
+        this.bubbleModal = document.getElementById('bubble-modal');
+        this.bubbleContainer = document.getElementById('bubble-container');
+        this.formSection = document.getElementById('form-section');
+        this.choiceBtns = document.querySelectorAll('.choice-btn');
+        this.createBubbleBtn = document.getElementById('create-bubble-btn');
+        this.cancelBubbleBtn = document.getElementById('cancel-bubble-btn');
+        this.guestNameInput = document.getElementById('guest-name-input');
+        this.guestEmojiInput = document.getElementById('guest-emoji');
+        
+        this.selectedChoice = null;
+        this.bubbles = [];
         this.init();
     }
 
     init() {
-        this.loadCheckedInGuests();
         this.setupEventListeners();
-        this.animateBubbles();
-        console.log('Bubble sign-in initialized');
+        this.loadExistingBubbles();
+        console.log('Dynamic bubble sign-in initialized');
     }
 
     setupEventListeners() {
-        // Bubble click events
-        this.bubbles.forEach(bubble => {
-            bubble.addEventListener('click', (e) => {
-                this.handleBubbleClick(e);
+        // Add bubble button
+        this.addBubbleBtn.addEventListener('click', () => {
+            this.showModal();
+        });
+
+        // Choice buttons
+        this.choiceBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.handleChoiceSelection(e);
             });
         });
 
-        // Form submission
-        if (this.submitButton) {
-            this.submitButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.handleCheckIn();
-            });
-        }
+        // Form inputs
+        this.guestNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.createBubble();
+            }
+        });
 
-        // Enter key on input
-        if (this.nameInput) {
-            this.nameInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    this.handleCheckIn();
-                }
-            });
-        }
+        // Create bubble button
+        this.createBubbleBtn.addEventListener('click', () => {
+            this.createBubble();
+        });
+
+        // Cancel button
+        this.cancelBubbleBtn.addEventListener('click', () => {
+            this.hideModal();
+        });
+
+        // Close modal on overlay click
+        this.bubbleModal.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                this.hideModal();
+            }
+        });
     }
 
-    handleBubbleClick(event) {
-        const bubble = event.currentTarget;
-        const guestId = bubble.dataset.guest;
+    showModal() {
+        this.bubbleModal.style.display = 'flex';
+        setTimeout(() => {
+            this.bubbleModal.querySelector('.modal-content').classList.add('show');
+        }, 10);
         
-        // Check if already checked in
-        if (this.isGuestCheckedIn(guestId)) {
-            this.showMessage('This guest has already checked in!', 'warning');
+        // Reset form
+        this.resetForm();
+    }
+
+    hideModal() {
+        this.bubbleModal.querySelector('.modal-content').classList.remove('show');
+        setTimeout(() => {
+            this.bubbleModal.style.display = 'none';
+        }, 300);
+        
+        this.resetForm();
+    }
+
+    handleChoiceSelection(event) {
+        const btn = event.currentTarget;
+        const choice = btn.dataset.choice;
+        
+        // Remove previous selection
+        this.choiceBtns.forEach(b => b.classList.remove('selected'));
+        
+        // Add selection to clicked button
+        btn.classList.add('selected');
+        this.selectedChoice = choice;
+        
+        // Show form section
+        this.formSection.style.display = 'block';
+        this.guestNameInput.focus();
+    }
+
+    resetForm() {
+        this.choiceBtns.forEach(btn => btn.classList.remove('selected'));
+        this.selectedChoice = null;
+        this.formSection.style.display = 'none';
+        this.guestNameInput.value = '';
+        this.guestEmojiInput.value = '';
+    }
+
+    createBubble() {
+        const guestName = this.guestNameInput.value.trim();
+        const guestEmoji = this.guestEmojiInput.value.trim();
+
+        if (!this.selectedChoice) {
+            this.showMessage('Please choose who you\'re celebrating with', 'error');
             return;
         }
-
-        // Animate bubble
-        this.animateBubbleClick(bubble);
-        
-        // Show check-in form
-        this.showCheckInForm(guestId);
-    }
-
-    animateBubbleClick(bubble) {
-        // Add click animation
-        bubble.style.transform = 'scale(0.8)';
-        bubble.style.filter = 'brightness(1.2)';
-        
-        setTimeout(() => {
-            bubble.style.transform = '';
-            bubble.style.filter = '';
-        }, 200);
-
-        // Add ripple effect
-        this.createRippleEffect(bubble);
-    }
-
-    createRippleEffect(bubble) {
-        const ripple = document.createElement('div');
-        ripple.className = 'ripple';
-        ripple.style.cssText = `
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            pointer-events: none;
-        `;
-
-        const rect = bubble.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = rect.width / 2;
-        const y = rect.height / 2;
-
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x - size / 2 + 'px';
-        ripple.style.top = y - size / 2 + 'px';
-
-        bubble.style.position = 'relative';
-        bubble.appendChild(ripple);
-
-        setTimeout(() => {
-            if (ripple.parentNode) {
-                ripple.parentNode.removeChild(ripple);
-            }
-        }, 600);
-    }
-
-    showCheckInForm(guestId) {
-        if (this.checkinForm) {
-            this.checkinForm.style.display = 'block';
-            this.checkinForm.dataset.guestId = guestId;
-            
-            // Focus on input
-            if (this.nameInput) {
-                this.nameInput.focus();
-                this.nameInput.value = '';
-            }
-
-            // Add fade-in animation
-            this.checkinForm.classList.add('fade-in');
-        }
-    }
-
-    handleCheckIn() {
-        const guestId = this.checkinForm.dataset.guestId;
-        const guestName = this.nameInput.value.trim();
 
         if (!guestName) {
             this.showMessage('Please enter your name', 'error');
@@ -136,97 +123,92 @@ class BubbleSignIn {
             return;
         }
 
-        // Save guest check-in
-        const guestData = {
-            id: guestId,
+        // Create bubble data
+        const bubbleData = {
+            id: this.generateId(),
             name: guestName,
+            emoji: guestEmoji,
+            choice: this.selectedChoice,
             timestamp: new Date().toISOString(),
-            bubble: this.getBubbleEmoji(guestId)
+            color: this.selectedChoice === 'jacky' ? 'jacky-bubble' : 'eunice-bubble'
         };
 
-        this.checkedInGuests.push(guestData);
-        this.saveCheckedInGuests();
+        // Add to bubbles array
+        this.bubbles.push(bubbleData);
+        this.saveBubbles();
 
-        // Update bubble appearance
-        this.updateBubbleAfterCheckIn(guestId, guestName);
+        // Create visual bubble
+        this.createVisualBubble(bubbleData);
 
-        // Hide form
-        this.hideCheckInForm();
+        // Hide modal
+        this.hideModal();
 
-        // Show success message
-        this.showMessage(`Welcome, ${guestName}! 💕`, 'success');
+        // Show confirmation
+        this.showConfirmation(guestName);
 
-        // Trigger app event
-        if (window.weddingApp) {
-            window.weddingApp.showMessage(`Welcome, ${guestName}! 💕`, 'success');
-        }
+        // Show greeting
+        this.showGreetingMessage(guestName);
     }
 
-    updateBubbleAfterCheckIn(guestId, guestName) {
-        const bubble = document.querySelector(`[data-guest="${guestId}"]`);
-        if (bubble) {
-            // Change bubble appearance
-            bubble.style.background = 'linear-gradient(135deg, #4ECDC4, #44A08D)';
-            bubble.style.transform = 'scale(1.1)';
-            bubble.style.boxShadow = '0 6px 20px rgba(78, 205, 196, 0.4)';
-            
-            // Add check mark
-            bubble.innerHTML = '✅';
-            bubble.title = `Checked in: ${guestName}`;
-            
-            // Remove click event
-            bubble.style.cursor = 'default';
-            bubble.removeEventListener('click', this.handleBubbleClick);
-        }
+    createVisualBubble(bubbleData) {
+        const bubble = document.createElement('div');
+        bubble.className = `bubble ${bubbleData.color}`;
+        bubble.dataset.bubbleId = bubbleData.id;
+        
+        // Create bubble content
+        const content = document.createElement('div');
+        content.className = 'bubble-content';
+        content.innerHTML = `
+            <div class="bubble-name">${bubbleData.name}</div>
+            ${bubbleData.emoji ? `<div class="bubble-emoji">${bubbleData.emoji}</div>` : ''}
+        `;
+        
+        bubble.appendChild(content);
+        
+        // Add to container
+        this.bubbleContainer.appendChild(bubble);
+        
+        // Add click event to show details
+        bubble.addEventListener('click', () => {
+            this.showBubbleDetails(bubbleData);
+        });
     }
 
-    hideCheckInForm() {
-        if (this.checkinForm) {
-            this.checkinForm.style.display = 'none';
-            this.checkinForm.classList.remove('fade-in');
-        }
+    showBubbleDetails(bubbleData) {
+        const relationship = bubbleData.choice === 'jacky' ? 'Friend of Jacky' : 'Friend of Eunice';
+        const emoji = bubbleData.choice === 'jacky' ? '💙' : '💗';
+        
+        this.showMessage(`${bubbleData.name} - ${relationship} ${emoji}`, 'info');
     }
 
-    getBubbleEmoji(guestId) {
-        const bubble = document.querySelector(`[data-guest="${guestId}"]`);
-        return bubble ? bubble.textContent : '👋';
+    showConfirmation(guestName) {
+        this.showMessage(`Thanks, ${guestName}! You're now part of the celebration 💕`, 'success');
     }
 
-    isGuestCheckedIn(guestId) {
-        return this.checkedInGuests.some(guest => guest.id === guestId);
+    generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
 
-    loadCheckedInGuests() {
+    loadExistingBubbles() {
         try {
-            const saved = localStorage.getItem('wedding_checked_in_guests');
+            const saved = localStorage.getItem('wedding_dynamic_bubbles');
             if (saved) {
-                this.checkedInGuests = JSON.parse(saved);
-                this.updateCheckedInBubbles();
+                this.bubbles = JSON.parse(saved);
+                this.bubbles.forEach(bubble => {
+                    this.createVisualBubble(bubble);
+                });
             }
         } catch (error) {
-            console.warn('Could not load checked in guests:', error);
+            console.warn('Could not load existing bubbles:', error);
         }
     }
 
-    saveCheckedInGuests() {
+    saveBubbles() {
         try {
-            localStorage.setItem('wedding_checked_in_guests', JSON.stringify(this.checkedInGuests));
+            localStorage.setItem('wedding_dynamic_bubbles', JSON.stringify(this.bubbles));
         } catch (error) {
-            console.warn('Could not save checked in guests:', error);
+            console.warn('Could not save bubbles:', error);
         }
-    }
-
-    updateCheckedInBubbles() {
-        this.checkedInGuests.forEach(guest => {
-            this.updateBubbleAfterCheckIn(guest.id, guest.name);
-        });
-    }
-
-    animateBubbles() {
-        // Add staggered animation delays
-        this.bubbles.forEach((bubble, index) => {
-            bubble.style.animationDelay = `${index * 0.2}s`;
-        });
     }
 
     showMessage(message, type = 'info') {
@@ -237,55 +219,143 @@ class BubbleSignIn {
         }
     }
 
+    showGreetingMessage(guestName) {
+        // Create greeting modal
+        const greetingModal = document.createElement('div');
+        greetingModal.className = 'greeting-modal';
+        greetingModal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        `;
+
+        const greetingEmoji = this.getGreetingEmoji();
+        
+        greetingModal.innerHTML = `
+            <div class="greeting-content" style="
+                background: linear-gradient(135deg, var(--primary), var(--secondary));
+                color: white;
+                padding: 32px;
+                border-radius: 24px;
+                text-align: center;
+                max-width: 90%;
+                transform: scale(0.8);
+                transition: transform 0.3s ease;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            ">
+                <div class="greeting-emoji" style="font-size: 4rem; margin-bottom: 16px;">
+                    ${greetingEmoji}
+                </div>
+                <h2 style="
+                    font-family: var(--font-heading);
+                    font-size: 1.8rem;
+                    margin: 0 0 16px 0;
+                    color: white;
+                ">Welcome, ${guestName}!</h2>
+                <p style="
+                    font-size: 1.1rem;
+                    margin: 0 0 16px 0;
+                    opacity: 0.9;
+                    line-height: 1.5;
+                ">We're so happy you're here to celebrate with Jacky & Eunice.</p>
+                <p style="
+                    font-size: 1rem;
+                    margin: 0 0 24px 0;
+                    opacity: 0.8;
+                    line-height: 1.5;
+                ">Thank you for being part of their special day!</p>
+                <button class="greeting-close-btn" style="
+                    background: rgba(255, 255, 255, 0.2);
+                    border: 2px solid white;
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 12px;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                ">Continue to App</button>
+            </div>
+        `;
+
+        document.body.appendChild(greetingModal);
+
+        // Animate in
+        setTimeout(() => {
+            greetingModal.style.opacity = '1';
+            greetingModal.querySelector('.greeting-content').style.transform = 'scale(1)';
+        }, 10);
+
+        // Close greeting
+        const closeBtn = greetingModal.querySelector('.greeting-close-btn');
+        closeBtn.addEventListener('click', () => {
+            this.closeGreetingMessage(greetingModal);
+        });
+
+        // Auto-close after 5 seconds
+        setTimeout(() => {
+            if (greetingModal.parentNode) {
+                this.closeGreetingMessage(greetingModal);
+            }
+        }, 5000);
+    }
+
+    closeGreetingMessage(modal) {
+        modal.style.opacity = '0';
+        modal.querySelector('.greeting-content').style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            if (modal.parentNode) {
+                modal.parentNode.removeChild(modal);
+            }
+        }, 300);
+    }
+
+    getGreetingEmoji() {
+        const hour = new Date().getHours();
+        if (hour < 12) return '🌅';
+        if (hour < 17) return '☀️';
+        return '🌙';
+    }
+
     // Get statistics
-    getCheckInStats() {
+    getBubbleStats() {
+        const jackyBubbles = this.bubbles.filter(b => b.choice === 'jacky').length;
+        const euniceBubbles = this.bubbles.filter(b => b.choice === 'eunice').length;
+        
         return {
             total: this.bubbles.length,
-            checkedIn: this.checkedInGuests.length,
-            percentage: Math.round((this.checkedInGuests.length / this.bubbles.length) * 100)
+            jackyFriends: jackyBubbles,
+            euniceFriends: euniceBubbles,
+            withEmojis: this.bubbles.filter(b => b.emoji).length
         };
     }
 
-    // Reset all check-ins (for testing)
-    resetCheckIns() {
-        this.checkedInGuests = [];
-        this.saveCheckedInGuests();
-        
-        this.bubbles.forEach(bubble => {
-            bubble.style.background = '';
-            bubble.style.transform = '';
-            bubble.style.boxShadow = '';
-            bubble.innerHTML = bubble.dataset.originalEmoji || '👋';
-            bubble.style.cursor = 'pointer';
-            bubble.title = '';
-        });
-        
-        this.hideCheckInForm();
+    // Reset all bubbles (for testing)
+    resetBubbles() {
+        this.bubbles = [];
+        this.saveBubbles();
+        this.bubbleContainer.innerHTML = '';
     }
 }
 
-// ===== CSS ANIMATIONS =====
-
-// Add ripple animation to CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
 // ===== INITIALIZATION =====
 
-// Initialize bubble sign-in when DOM is ready
+// Initialize dynamic bubble sign-in when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     // Wait for main app to initialize
     setTimeout(() => {
         if (window.weddingApp) {
-            window.bubbleSignIn = new BubbleSignIn();
+            window.dynamicBubbleSignIn = new DynamicBubbleSignIn();
         }
     }, 100);
 }); 
