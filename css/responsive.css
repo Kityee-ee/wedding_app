@@ -1,0 +1,152 @@
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Mobile-First Approach - All styles above are for mobile */
+
+/* Small Mobile (320px - 375px) */
+@media (max-width: 375px) {
+    .container {
+        padding: var(--spacing-sm);
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    .bubble {
+        font-size: 1.5rem;
+    }
+    
+    .nav-title {
+        font-size: 1.2rem;
+    }
+    
+    .nav-date {
+        font-size: 0.8rem;
+    }
+}
+
+/* Medium Mobile (376px - 428px) */
+@media (min-width: 376px) and (max-width: 428px) {
+    .bubble-container {
+        gap: var(--spacing-lg);
+    }
+    
+    .bubble {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+}
+
+/* Touch Target Optimization */
+@media (hover: none) and (pointer: coarse) {
+    /* Mobile touch devices */
+    .bubble {
+        min-height: 60px;
+        min-width: 60px;
+    }
+    
+    .btn {
+        min-height: 48px;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .nav-btn {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    .name-input,
+    .blessing-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: var(--spacing-md);
+    }
+}
+
+/* Landscape Orientation */
+@media (orientation: landscape) and (max-height: 500px) {
+    .nav-bar {
+        padding: var(--spacing-xs);
+    }
+    
+    .nav-title {
+        font-size: 1.2rem;
+    }
+    
+    .section {
+        padding-bottom: 80px;
+    }
+    
+    .bottom-nav {
+        padding: var(--spacing-xs);
+    }
+    
+    .nav-icon {
+        font-size: 1.2rem;
+    }
+    
+    .nav-label {
+        font-size: 0.7rem;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .bubble {
+        box-shadow: 0 2px 8px var(--shadow);
+    }
+    
+    .btn-primary:hover {
+        box-shadow: 0 2px 8px var(--shadow);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .bubble {
+        animation: none;
+    }
+    
+    .loading-heart {
+        animation: none;
+    }
+}
+
+/* Dark Mode Support (Future) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #1a1a1a;
+        --text: #ffffff;
+        --white: #2a2a2a;
+        --shadow: rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .bottom-nav,
+    .loading-screen {
+        display: none !important;
+    }
+    
+    .section {
+        position: static;
+        opacity: 1;
+        transform: none;
+        page-break-inside: avoid;
+    }
+    
+    .bubble {
+        animation: none;
+        box-shadow: none;
+        border: 1px solid var(--primary);
+    }
+} 

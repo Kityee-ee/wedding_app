@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Jacky & Eunice Wedding</title>
+    <meta name="description" content="Join us in celebrating Jacky & Eunice's special day on October 25, 2025">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-heart">💕</div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container">
+        <!-- Navigation -->
+        <nav class="nav-bar">
+            <div class="nav-content">
+                <h1 class="nav-title">Jacky & Eunice</h1>
+                <div class="nav-date">25 Oct 2025</div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Bubble Sign-in Section -->
+            <section id="bubble-signin" class="section active">
+                <div class="container">
+                    <h2 class="section-title">Welcome! 💕</h2>
+                    <p class="section-subtitle">Tap the bubbles to check in</p>
+                    
+                    <div class="bubble-container">
+                        <div class="bubble" data-guest="Guest 1">👋</div>
+                        <div class="bubble" data-guest="Guest 2">💕</div>
+                        <div class="bubble" data-guest="Guest 3">🎉</div>
+                        <div class="bubble" data-guest="Guest 4">✨</div>
+                        <div class="bubble" data-guest="Guest 5">💝</div>
+                        <div class="bubble" data-guest="Guest 6">🎊</div>
+                    </div>
+                    
+                    <div class="checkin-form" id="checkin-form" style="display: none;">
+                        <input type="text" id="guest-name" placeholder="Enter your name" class="name-input">
+                        <button id="submit-checkin" class="btn btn-primary">Check In</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Couple's Story Section -->
+            <section id="couple-story" class="section">
+                <div class="container">
+                    <h2 class="section-title">Our Story 💑</h2>
+                    <div class="story-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">2020</div>
+                            <div class="timeline-content">
+                                <h3>First Meeting</h3>
+                                <p>Where it all began...</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2023</div>
+                            <div class="timeline-content">
+                                <h3>The Proposal</h3>
+                                <p>A magical moment...</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2025</div>
+                            <div class="timeline-content">
+                                <h3>Our Wedding</h3>
+                                <p>The big day arrives...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blessing Wall Section -->
+            <section id="blessing-wall" class="section">
+                <div class="container">
+                    <h2 class="section-title">Blessing Wall 🙏</h2>
+                    <p class="section-subtitle">Leave your heartfelt message</p>
+                    
+                    <div class="blessing-form">
+                        <textarea id="blessing-message" placeholder="Write your blessing here..." class="blessing-input"></textarea>
+                        <button id="submit-blessing" class="btn btn-primary">Send Blessing</button>
+                    </div>
+                    
+                    <div class="blessings-container" id="blessings-container">
+                        <!-- Blessings will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Photo Wall Section -->
+            <section id="photo-wall" class="section">
+                <div class="container">
+                    <h2 class="section-title">Photo Wall 📸</h2>
+                    <p class="section-subtitle">Our journey together</p>
+                    
+                    <div class="photo-gallery" id="photo-gallery">
+                        <!-- Photos will be loaded here -->
+                        <div class="photo-placeholder">
+                            <p>Photos coming soon...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-section="bubble-signin">
+                <span class="nav-icon">👋</span>
+                <span class="nav-label">Check-in</span>
+            </button>
+            <button class="nav-btn" data-section="couple-story">
+                <span class="nav-icon">💑</span>
+                <span class="nav-label">Story</span>
+            </button>
+            <button class="nav-btn" data-section="blessing-wall">
+                <span class="nav-icon">🙏</span>
+                <span class="nav-label">Blessings</span>
+            </button>
+            <button class="nav-btn" data-section="photo-wall">
+                <span class="nav-icon">📸</span>
+                <span class="nav-label">Photos</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+    <script src="js/bubble-signin.js"></script>
+    <script src="js/blessing-wall.js"></script>
+    <script src="js/photo-wall.js"></script>
+</body>
+</html> 
