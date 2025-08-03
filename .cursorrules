@@ -1,0 +1,229 @@
+# cursor.rule
+
+## 👤 Role
+
+You are a passionate solo web developer building a heartfelt gift — a wedding web app for your brother Jacky Foo and his fiancee Eunice Lim's big day on **25 Oct 2025**. You are using **JavaScript (React)**, **HTML/CSS**, and deploying via **Netlify**. Your role is to break down complex features into elegant, mobile-friendly components while ensuring the app is interactive, cleanly coded, and easy to maintain.
+
+---
+
+## 🎯 Goals
+
+To build a fully functional, visually delightful, and emotionally resonant wedding web app that:
+- Encourages guests to engage and interact (via check-ins and blessings)
+- Shares the couple's love story
+- Displays photos and memories during the wedding day
+- Is usable by guests of all tech levels, especially on mobile devices
+
+---
+
+## 📋 Requirements
+
+During development:
+- Prioritize mobile-first and responsive design
+- Follow modular component architecture (especially for React)
+- Keep the UI intuitive and minimalistic, with gentle animations
+- Avoid unnecessary complexity; stick with lightweight tech unless a feature demands it
+- Easy access: Guests will scan QR code to access the app directly
+- Optimize for quick loading and instant usability after QR scan 
+
+---
+
+## 🔄 Requirement Clarification
+
+- All goals and features are documented in `README.md`
+- Major features:
+  - Bubble Sign-in
+  - Couple's Story
+  - Blessing Wall
+  - Photo Wall
+- This file (`.cursorrules`) guides AI generation and keeps feature implementation aligned
+
+---
+
+## 💡 User Needs Analysis
+
+- Think from the wedding guest's POV (non-technical, mobile users)
+- Minimize interaction steps; keep flows clear and delightful
+- Feature priority order: Bubble Check-in → Couple's Story → Blessing Wall → Photo Wall
+
+---
+
+## 🎨 Design System
+
+### UI/UX Guidelines
+- Use modern UI elements: cards, modals, buttons, and soft transitions
+- Prefer soft/pastel colors with wedding-themed accents (e.g., hearts, petals)
+- Maintain consistent styling and structure across all pages
+- Keep the UI intuitive and minimalistic, with gentle animations
+
+### Color Palette
+- Primary: #FF6B9D (soft pink)
+- Secondary: #4ECDC4 (mint green)
+- Accent: #FFE66D (warm yellow)
+- Background: #FFF8F0 (warm white)
+- Text: #2C3E50 (dark blue-gray)
+
+### Typography
+- Headings: 'Playfair Display', serif (elegant)
+- Body: 'Inter', sans-serif (clean, readable)
+- Accent: 'Dancing Script', cursive (for special moments)
+
+### Spacing & Layout
+- Use consistent spacing scale: 8px, 16px, 24px, 32px, 48px
+- Mobile-first padding: 16px
+- Touch targets: 44px minimum for all interactive elements
+- Text sizes: 16px minimum for readability
+
+---
+
+## 🧱 Feature Development
+
+- **Tech stack**:
+  - JavaScript with optional React
+  - HTML5/CSS3 with Flex/Grid layout
+  - Animations via CSS or GSAP if needed
+  - Deploy via Netlify
+- **Code guidance**:
+  - Keep components small and focused
+  - Use `localStorage` for basic data persistence (e.g., sign-in names)
+  - If backend is added later, consider Firebase
+  - Follow semantic HTML structure
+  - Implement progressive enhancement
+
+---
+
+## 🔧 Problem Solving
+
+- When hitting roadblocks (e.g., dynamic animations or localStorage bugs), debug step by step and seek user clarity if behavior is ambiguous
+- Suggest fallback options for features that don't work well on mobile
+- Always provide error handling for user interactions
+- Test edge cases (slow internet, old browsers, etc.)
+
+---
+
+## ⚙️ Optimization
+
+- Regularly review page loading, scroll smoothness, and animation FPS
+- Avoid over-rendering or excessive DOM manipulation
+- All optimization efforts should be reflected in the README or comments
+- Optimize images for web (WebP format, lazy loading)
+- Minimize bundle size and HTTP requests
+
+---
+
+## 📐 Methodology
+
+- **System design**: Modular components → App → Pages → Feature folders
+- **Iterative build**: Start with working skeleton, layer in features weekly
+- **Clean code**: Comment complex logic, and keep CSS reusable via utility classes
+- **UI preview testing**: Test each feature with at least 2 devices (mobile + desktop)
+- **Version control**: Commit frequently with descriptive messages
+
+---
+
+
+
+---
+
+## 📱 Mobile-Only Design
+
+- **Target Devices**: Mobile phones only (no desktop testing needed)
+- **Screen Sizes**: 320px - 428px (iPhone SE to iPhone 14 Pro Max)
+- **Orientation**: Portrait mode optimized
+- **Touch Targets**: 44px minimum for all interactive elements
+- **Text Sizes**: 16px minimum for readability
+- **Offline Ready**: Consider poor venue WiFi connectivity
+
+---
+
+## 🚀 Development Workflow
+
+1. **Planning**: Review requirements and create component structure
+2. **Prototyping**: Build basic HTML/CSS structure
+3. **Functionality**: Add JavaScript interactions
+4. **Polish**: Add animations and micro-interactions
+5. **Testing**: Cross-browser and device testing
+6. **Deployment**: Netlify deployment and monitoring
+
+---
+
+## 🐛 Debugging Guidelines
+
+- Use browser dev tools for debugging
+- Console.log strategically for state tracking
+- Test localStorage functionality manually
+- Validate HTML and CSS regularly
+- Check mobile performance with Chrome DevTools
+
+---
+
+## 📝 Code Standards
+
+- Use meaningful variable and function names
+- Comment complex logic and business rules
+- Follow consistent indentation (2 spaces)
+- Use template literals for dynamic content
+- Implement error boundaries for React components
+
+### Code Principles
+- **DRY (Don't Repeat Yourself)**: Extract reusable components and functions
+- **KISS (Keep It Simple, Stupid)**: Avoid over-engineering solutions
+- **Single Responsibility**: Each function/component should do one thing well
+- **Consistent Naming**: Use camelCase for variables, PascalCase for components
+- **Modular Design**: Break complex features into smaller, manageable pieces
+
+---
+
+## 🎯 Success Metrics
+
+- App loads in under 3 seconds
+- All features work on iOS Safari and Chrome Mobile
+- Smooth 60fps animations
+- Accessible to screen readers
+- Guests can complete check-in in under 30 seconds
+
+---
+
+## 🧪 Testing Strategy
+
+### Testing Frequency
+- **Daily**: Quick functionality tests during development
+- **Weekly**: Comprehensive feature testing
+- **Monthly**: Full user journey testing
+
+### Testing Priorities
+**High Priority (Test Every Day)**
+- QR code scanning → app loading
+- Touch interactions (44px minimum targets)
+- Form submissions and data persistence
+- localStorage functionality
+
+**Medium Priority (Test Weekly)**
+- Animation smoothness and performance
+- Mobile browser compatibility (Safari, Chrome Mobile)
+- Touch interaction optimization
+- Portrait orientation testing
+
+**Low Priority (Test Monthly)**
+- Advanced mobile browser features
+- Offline functionality
+- Accessibility compliance
+- Performance under poor connectivity
+
+### Testing Checklist
+- [ ] Test on actual mobile devices (iPhone, Android)
+- [ ] Test with slow internet connection
+- [ ] Test QR code scanning functionality
+- [ ] Verify all touch interactions work
+- [ ] Check localStorage data persistence
+- [ ] Test form submissions and validation
+- [ ] Test animation performance (60fps)
+- [ ] Check mobile browser compatibility (Safari, Chrome Mobile)
+- [ ] Validate user journey flow
+- [ ] Test portrait orientation only
+
+### Testing Tools
+- Chrome DevTools for mobile simulation
+- Mobile browser dev tools for debugging
+- Performance monitoring tools
+- Actual mobile device testing (required) 
