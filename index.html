@@ -59,7 +59,7 @@
                     <div class="bubble-modal" id="bubble-modal" style="display: none;">
                         <div class="modal-overlay"></div>
                         <div class="modal-content">
-                            <h3 class="modal-title">Who are you here to celebrate with?</h3>
+                            <h3 class="modal-title" id="modal-title">Who are you here to celebrate with?</h3>
                             
                             <div class="celebration-choice">
                                 <button class="choice-btn jacky-choice" data-choice="jacky">
@@ -73,19 +73,14 @@
                             </div>
                             
                             <div class="form-section" id="form-section" style="display: none;">
+                                <button id="form-back-btn" class="btn btn-back-modern">←</button>
                                 <div class="form-group">
                                     <label for="guest-name-input">Enter your name:</label>
                                     <input type="text" id="guest-name-input" placeholder="Your name" class="name-input">
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label for="guest-emoji">Optional emoji tag:</label>
-                                    <input type="text" id="guest-emoji" placeholder="🎓 Uni Buddy, 👩‍👧‍👦 Cousin, etc." class="emoji-input">
-                                </div>
-                                
                                 <div class="form-actions">
                                     <button id="create-bubble-btn" class="btn btn-primary">Create My Bubble</button>
-                                    <button id="cancel-bubble-btn" class="btn btn-secondary">Cancel</button>
                                 </div>
                             </div>
                         </div>

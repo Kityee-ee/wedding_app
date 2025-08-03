@@ -8,9 +8,9 @@ class DynamicBubbleSignIn {
         this.formSection = document.getElementById('form-section');
         this.choiceBtns = document.querySelectorAll('.choice-btn');
         this.createBubbleBtn = document.getElementById('create-bubble-btn');
-        this.cancelBubbleBtn = document.getElementById('cancel-bubble-btn');
         this.guestNameInput = document.getElementById('guest-name-input');
-        this.guestEmojiInput = document.getElementById('guest-emoji');
+        this.modalTitle = document.getElementById('modal-title');
+        this.formBackBtn = document.getElementById('form-back-btn');
         
         this.selectedChoice = null;
         this.bubbles = [];
@@ -48,9 +48,9 @@ class DynamicBubbleSignIn {
             this.createBubble();
         });
 
-        // Cancel button
-        this.cancelBubbleBtn.addEventListener('click', () => {
-            this.hideModal();
+        // Form back button
+        this.formBackBtn.addEventListener('click', () => {
+            this.goBackToChoice();
         });
 
         // Close modal on overlay click
@@ -91,9 +91,25 @@ class DynamicBubbleSignIn {
         btn.classList.add('selected');
         this.selectedChoice = choice;
         
+        // Update modal title to show only selected person
+        const selectedName = choice === 'jacky' ? 'Jacky' : 'Eunice';
+        this.modalTitle.textContent = `Celebrating with ${selectedName}`;
+        
         // Show form section
         this.formSection.style.display = 'block';
         this.guestNameInput.focus();
+    }
+
+    goBackToChoice() {
+        // Hide form section
+        this.formSection.style.display = 'none';
+        // Reset form
+        this.guestNameInput.value = '';
+        // Reset title
+        this.modalTitle.textContent = 'Who are you here to celebrate with?';
+        // Remove selection
+        this.choiceBtns.forEach(btn => btn.classList.remove('selected'));
+        this.selectedChoice = null;
     }
 
     resetForm() {
@@ -101,12 +117,11 @@ class DynamicBubbleSignIn {
         this.selectedChoice = null;
         this.formSection.style.display = 'none';
         this.guestNameInput.value = '';
-        this.guestEmojiInput.value = '';
+        this.modalTitle.textContent = 'Who are you here to celebrate with?';
     }
 
     createBubble() {
         const guestName = this.guestNameInput.value.trim();
-        const guestEmoji = this.guestEmojiInput.value.trim();
 
         if (!this.selectedChoice) {
             this.showMessage('Please choose who you\'re celebrating with', 'error');
@@ -127,7 +142,6 @@ class DynamicBubbleSignIn {
         const bubbleData = {
             id: this.generateId(),
             name: guestName,
-            emoji: guestEmoji,
             choice: this.selectedChoice,
             timestamp: new Date().toISOString(),
             color: this.selectedChoice === 'jacky' ? 'jacky-bubble' : 'eunice-bubble'
@@ -160,7 +174,6 @@ class DynamicBubbleSignIn {
         content.className = 'bubble-content';
         content.innerHTML = `
             <div class="bubble-name">${bubbleData.name}</div>
-            ${bubbleData.emoji ? `<div class="bubble-emoji">${bubbleData.emoji}</div>` : ''}
         `;
         
         bubble.appendChild(content);

@@ -424,6 +424,71 @@ body {
     box-shadow: 0 4px 15px var(--shadow);
 }
 
+.btn-back {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--text);
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+}
+
+.btn-back:hover {
+    background: var(--text);
+    color: var(--white);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-back-modern {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: transparent;
+    color: #6B7280; /* Grey color */
+    border: none; /* Remove border */
+    padding: 8px;
+    font-size: 1.4rem; /* Bigger font for thicker appearance */
+    font-weight: 600; /* Bolder weight for thicker arrow */
+    border-radius: 0; /* Remove border radius */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    z-index: 10;
+    /* Modern minimalist arrow */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.btn-back-modern:hover {
+    background: transparent; /* No background on hover */
+    color: #4B5563; /* Darker grey on hover */
+    transform: translateY(-1px);
+    box-shadow: none; /* Remove shadow */
+}
+
+.btn-back-modern:active {
+    transform: translateY(0);
+    box-shadow: none; /* Remove shadow */
+}
+
 /* ===== STORY TIMELINE ===== */
 .story-timeline {
     margin-top: var(--spacing-xl);
@@ -1021,14 +1086,13 @@ body {
     border-radius: var(--radius-lg);
     padding: var(--spacing-xl);
     max-width: 90%;
-    max-height: 90%;
+    width: 400px;
+    max-height: 80vh;
     overflow-y: auto;
     position: relative;
-    z-index: 1;
     transform: scale(0.8);
-    opacity: 0;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content.show {
