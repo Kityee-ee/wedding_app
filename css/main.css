@@ -1538,3 +1538,496 @@ body {
         opacity: 1;
     }
 } 
+
+/* ===== PHOTO WALL STYLES ===== */
+#photo-wall {
+    min-height: 100vh;
+    padding-bottom: 80px;
+    padding-top: var(--spacing-md);
+}
+
+#photo-wall .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-sm);
+}
+
+/* Photo Wall Header */
+.photo-wall-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.photo-wall-title {
+    font-family: var(--font-accent);
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 400;
+}
+
+.photo-wall-subtitle {
+    color: var(--text);
+    opacity: 0.7;
+    font-size: 1rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Category Filter */
+.photo-categories {
+    display: flex;
+    gap: var(--spacing-xs);
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.category-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--white);
+    border: 2px solid var(--primary);
+    border-radius: 25px;
+    color: var(--primary);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 44px;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+}
+
+/* Photo Grid */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    width: 100%;
+}
+
+/* Tablet: 2 columns */
+@media (max-width: 1024px) {
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+}
+
+/* Mobile: 2 columns */
+@media (max-width: 768px) {
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xs);
+    }
+}
+
+/* Photo Card */
+.photo-card {
+    position: relative;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 4px 12px var(--shadow);
+    cursor: pointer;
+    transition: var(--transition);
+    group: true;
+}
+
+.photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.photo-card-image-container {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+}
+
+.photo-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.photo-card:hover .photo-card-image {
+    transform: scale(1.05);
+}
+
+.photo-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.3s ease;
+}
+
+.photo-card:hover .photo-card-overlay {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.photo-card-camera {
+    position: absolute;
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+    color: var(--white);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.photo-card:hover .photo-card-camera {
+    opacity: 1;
+}
+
+/* Photo Card Content */
+.photo-card-content {
+    padding: var(--spacing-sm);
+}
+
+.photo-card-caption {
+    font-size: 0.875rem;
+    color: var(--text);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.photo-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.photo-card-info {
+    flex: 1;
+}
+
+.photo-card-author {
+    font-size: 0.75rem;
+    color: var(--text);
+    opacity: 0.6;
+    margin-bottom: 2px;
+}
+
+.photo-card-date {
+    font-size: 0.75rem;
+    color: var(--text);
+    opacity: 0.4;
+}
+
+/* Like Button */
+.like-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--text);
+    opacity: 0.6;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    min-height: 32px;
+}
+
+.like-btn:hover {
+    color: var(--primary);
+    opacity: 1;
+    background: rgba(255, 107, 157, 0.1);
+}
+
+.like-btn.liked {
+    color: var(--primary);
+    opacity: 1;
+}
+
+.like-btn.liked .heart-icon {
+    fill: var(--primary);
+}
+
+.heart-icon {
+    width: 14px;
+    height: 14px;
+    transition: var(--transition);
+}
+
+/* Photo Modal */
+.photo-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.photo-modal.active {
+    display: flex !important;
+    visibility: visible;
+    opacity: 1;
+}
+
+.photo-modal-content {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.photo-modal.active .photo-modal-content {
+    transform: scale(1);
+}
+
+/* Modal Navigation */
+.modal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-modal:not(.active) .modal-nav-btn,
+.photo-modal:not(.active) .modal-close {
+    display: none;
+}
+
+.modal-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.modal-nav-prev {
+    left: var(--spacing-sm);
+}
+
+.modal-nav-next {
+    right: var(--spacing-sm);
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Modal Image */
+.modal-image-container {
+    position: relative;
+    flex: 1;
+}
+
+.modal-image {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    display: block;
+}
+
+/* Modal Info */
+.modal-info {
+    padding: var(--spacing-md);
+}
+
+.modal-caption {
+    color: var(--text);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.modal-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-details {
+    flex: 1;
+}
+
+.modal-author {
+    font-size: 0.875rem;
+    color: var(--text);
+    opacity: 0.7;
+    margin-bottom: 4px;
+}
+
+.modal-date {
+    font-size: 0.875rem;
+    color: var(--text);
+    opacity: 0.5;
+}
+
+.modal-like-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(255, 107, 157, 0.1);
+    border: none;
+    border-radius: 25px;
+    color: var(--text);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.875rem;
+    min-height: 44px;
+}
+
+.modal-like-btn:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.modal-like-btn.liked {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.modal-like-btn.liked .heart-icon {
+    fill: var(--white);
+}
+
+/* Upload Section */
+.photo-upload-section {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px var(--shadow);
+    text-align: center;
+}
+
+.upload-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.upload-btn {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 25px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.upload-btn:hover {
+    background: #e55a8a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+}
+
+/* Empty State */
+.photo-empty {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text);
+    opacity: 0.5;
+}
+
+.empty-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--spacing-sm);
+    opacity: 0.3;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .photo-wall-title {
+        font-size: 2.5rem;
+    }
+    
+    .photo-card-content {
+        padding: 12px;
+    }
+    
+    .photo-card-caption {
+        font-size: 0.8rem;
+    }
+    
+    .modal-nav-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .modal-close {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .modal-info {
+        padding: var(--spacing-sm);
+    }
+    
+    .category-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+} 

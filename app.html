@@ -138,14 +138,37 @@
             <!-- Photo Wall Section -->
             <section id="photo-wall" class="section">
                 <div class="container">
-                    <h2 class="section-title">Photo Wall 📸</h2>
-                    <p class="section-subtitle">Our journey together</p>
-                    
-                    <div class="photo-gallery" id="photo-gallery">
-                        <!-- Photos will be loaded here -->
-                        <div class="photo-placeholder">
-                            <p>Photos coming soon...</p>
+                    <div class="photo-wall-header">
+                        <h1 class="photo-wall-title">Photo Gallery</h1>
+                        <p class="photo-wall-subtitle">Capturing moments of our journey to forever</p>
+                        
+                        <!-- Category Filter -->
+                        <div class="photo-categories">
+                            <button class="category-btn active" data-category="all">All</button>
+                            <button class="category-btn" data-category="couple">Couple</button>
+                            <button class="category-btn" data-category="betrothal">Betrothal</button>
+                            <button class="category-btn" data-category="rom">ROM</button>
+                            <button class="category-btn" data-category="wedding">Wedding Day</button>
                         </div>
+                    </div>
+                    
+                    <!-- Photo Grid -->
+                    <div class="photo-grid" id="photo-grid">
+                        <!-- Photos will be loaded here -->
+                    </div>
+                    
+                    <!-- Upload Section -->
+                    <div class="photo-upload-section">
+                        <h3 class="upload-title">Share Your Photos</h3>
+                        <p class="photo-wall-subtitle">Help us capture every moment</p>
+                        <button class="upload-btn" id="upload-photo-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                            Upload Photo
+                        </button>
+                        <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
                     </div>
                 </div>
             </section>
@@ -170,12 +193,56 @@
                 <span class="nav-label">Photos</span>
             </button>
         </nav>
+        
+        <!-- Photo Modal -->
+        <div class="photo-modal" id="photo-modal">
+            <button class="modal-nav-btn modal-nav-prev" id="modal-prev">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+            </button>
+            
+            <button class="modal-nav-btn modal-nav-next" id="modal-next">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                </svg>
+            </button>
+            
+            <button class="modal-close" id="modal-close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="photo-modal-content">
+                <div class="modal-image-container">
+                    <img class="modal-image" id="modal-image" src="" alt="">
+                </div>
+                
+                <div class="modal-info">
+                    <p class="modal-caption" id="modal-caption"></p>
+                    <div class="modal-meta">
+                        <div class="modal-details">
+                            <p class="modal-author" id="modal-author"></p>
+                            <p class="modal-date" id="modal-date"></p>
+                        </div>
+                        <button class="modal-like-btn" id="modal-like-btn">
+                            <svg class="heart-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                            <span id="modal-like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- JavaScript -->
-    <script src="js/app.js"></script>
+    <script src="js/photo-wall.js?v=2"></script>
     <script src="js/bubble-signin.js"></script>
     <script src="js/blessing-wall.js"></script>
-    <script src="js/photo-wall.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html> 

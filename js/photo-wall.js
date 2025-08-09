@@ -2,300 +2,501 @@
 
 class PhotoWall {
     constructor() {
-        this.photoGallery = document.getElementById('photo-gallery');
         this.photos = [];
+        this.filteredPhotos = [];
+        this.currentCategory = 'all';
+        this.selectedPhotoIndex = 0;
+        this.likedPhotos = new Set();
+        this.comments = {};
+        
         this.init();
     }
 
     init() {
         this.loadPhotos();
+        this.loadFromStorage();
+        this.bindEvents();
         this.renderPhotos();
-        console.log('Photo wall initialized');
     }
 
+    // Load photo data - using your actual photos
     loadPhotos() {
-        // Load sample photos for now
         this.photos = [
+            // Couple Photos
             {
-                id: '1',
-                src: 'assets/photos/sample1.jpg',
-                alt: 'Jacky & Eunice - First Date',
-                caption: 'Our first date at the coffee shop',
-                timestamp: '2020-03-15T10:00:00Z',
-                category: 'dating'
+                id: 'couple-1',
+                url: 'assets/photos/Couple/WhatsApp Image 2025-08-03 at 7.23.53 PM.jpeg',
+                caption: 'Beautiful moments together 💕',
+                author: 'Wedding Photographer',
+                category: 'couple',
+                timestamp: new Date(2025, 5, 15),
+                likes: 24
             },
             {
-                id: '2',
-                src: 'assets/photos/sample2.jpg',
-                alt: 'Jacky & Eunice - Proposal',
-                caption: 'The magical proposal moment',
-                timestamp: '2023-12-25T18:30:00Z',
-                category: 'proposal'
+                id: 'couple-2',
+                url: 'assets/photos/Couple/WhatsApp Image 2025-08-03 at 7.23.55 PM.jpeg',
+                caption: 'Love in every glance',
+                author: 'Wedding Photographer',
+                category: 'couple',
+                timestamp: new Date(2025, 5, 20),
+                likes: 18
             },
             {
-                id: '3',
-                src: 'assets/photos/sample3.jpg',
-                alt: 'Jacky & Eunice - Engagement',
-                caption: 'Celebrating our engagement',
-                timestamp: '2024-01-01T12:00:00Z',
-                category: 'engagement'
+                id: 'couple-3',
+                url: 'assets/photos/Couple/WhatsApp Image 2025-08-03 at 7.23.56 PM (1).jpeg',
+                caption: 'Perfect harmony together',
+                author: 'Wedding Photographer',
+                category: 'couple',
+                timestamp: new Date(2025, 6, 1),
+                likes: 31
+            },
+            {
+                id: 'couple-4',
+                url: 'assets/photos/Couple/WhatsApp Image 2025-08-03 at 7.23.57 PM (1).jpeg',
+                caption: 'Tender moments captured',
+                author: 'Wedding Photographer',
+                category: 'couple',
+                timestamp: new Date(2025, 6, 5),
+                likes: 27
+            },
+            {
+                id: 'couple-5',
+                url: 'assets/photos/Couple/WhatsApp Image 2025-08-03 at 7.23.57 PM (2).jpeg',
+                caption: 'Sweet embrace',
+                author: 'Wedding Photographer',
+                category: 'couple',
+                timestamp: new Date(2025, 6, 10),
+                likes: 35
+            },
+            {
+                id: 'couple-6',
+                url: 'assets/photos/Couple/WhatsApp Image 2025-08-03 at 7.23.58 PM (1).jpeg',
+                caption: 'Laughter and joy',
+                author: 'Wedding Photographer',
+                category: 'couple',
+                timestamp: new Date(2025, 6, 12),
+                likes: 22
+            },
+            
+            // Betrothal Photos
+            {
+                id: 'betrothal-1',
+                url: 'assets/photos/Betrothal/WhatsApp Image 2025-08-03 at 7.23.56 PM (2).jpeg',
+                caption: 'Traditional betrothal ceremony 🎊',
+                author: 'Family Photographer',
+                category: 'betrothal',
+                timestamp: new Date(2025, 4, 15),
+                likes: 42
+            },
+            {
+                id: 'betrothal-2',
+                url: 'assets/photos/Betrothal/WhatsApp Image 2025-08-03 at 7.23.56 PM (3).jpeg',
+                caption: 'Blessing from families',
+                author: 'Family Photographer',
+                category: 'betrothal',
+                timestamp: new Date(2025, 4, 15),
+                likes: 38
+            },
+            {
+                id: 'betrothal-3',
+                url: 'assets/photos/Betrothal/WhatsApp Image 2025-08-03 at 7.23.56 PM (4).jpeg',
+                caption: 'Ceremonial traditions',
+                author: 'Family Photographer',
+                category: 'betrothal',
+                timestamp: new Date(2025, 4, 15),
+                likes: 33
+            },
+            
+            // ROM Photos
+            {
+                id: 'rom-1',
+                url: 'assets/photos/ROM/WhatsApp Image 2025-08-03 at 7.23.56 PM (4).jpeg',
+                caption: 'Registry of Marriage celebration 💍',
+                author: 'ROM Photographer',
+                category: 'rom',
+                timestamp: new Date(2025, 7, 1),
+                likes: 45
+            },
+            {
+                id: 'rom-2',
+                url: 'assets/photos/ROM/WhatsApp Image 2025-08-03 at 7.23.58 PM.jpeg',
+                caption: 'Official moment',
+                author: 'ROM Photographer',
+                category: 'rom',
+                timestamp: new Date(2025, 7, 1),
+                likes: 40
+            },
+            {
+                id: 'rom-3',
+                url: 'assets/photos/ROM/WhatsApp Image 2025-08-03 at 7.23.59 PM (4).jpeg',
+                caption: 'Legally married!',
+                author: 'ROM Photographer',
+                category: 'rom',
+                timestamp: new Date(2025, 7, 1),
+                likes: 50
+            },
+            
+            // Wedding Day Photos
+            {
+                id: 'wedding-1',
+                url: 'assets/photos/WeddingDay/WhatsApp Image 2025-08-03 at 7.24.02 PM.jpeg',
+                caption: 'The big day arrives! 👰🤵',
+                author: 'Wedding Photographer',
+                category: 'wedding',
+                timestamp: new Date(2025, 9, 25),
+                likes: 65
+            },
+            {
+                id: 'wedding-2',
+                url: 'assets/photos/WeddingDay/WhatsApp Image 2025-08-03 at 7.24.02 PM (1).jpeg',
+                caption: 'Walking down the aisle',
+                author: 'Wedding Photographer',
+                category: 'wedding',
+                timestamp: new Date(2025, 9, 25),
+                likes: 58
+            },
+            {
+                id: 'wedding-3',
+                url: 'assets/photos/WeddingDay/WhatsApp Image 2025-08-03 at 7.24.02 PM (2).jpeg',
+                caption: 'Vows of eternal love',
+                author: 'Wedding Photographer',
+                category: 'wedding',
+                timestamp: new Date(2025, 9, 25),
+                likes: 72
+            },
+            {
+                id: 'wedding-4',
+                url: 'assets/photos/WeddingDay/WhatsApp Image 2025-08-03 at 7.24.02 PM (3).jpeg',
+                caption: 'Celebration begins!',
+                author: 'Wedding Photographer',
+                category: 'wedding',
+                timestamp: new Date(2025, 9, 25),
+                likes: 61
             }
         ];
-    }
-
-    renderPhotos() {
-        if (!this.photoGallery) return;
-
-        // Clear gallery
-        this.photoGallery.innerHTML = '';
-
-        if (this.photos.length === 0) {
-            this.photoGallery.innerHTML = `
-                <div class="photo-placeholder">
-                    <p>Photos coming soon... 📸</p>
-                </div>
-            `;
-            return;
-        }
-
-        // Create photo grid
-        this.photos.forEach(photo => {
-            const photoElement = this.createPhotoElement(photo);
-            this.photoGallery.appendChild(photoElement);
-        });
-    }
-
-    createPhotoElement(photo) {
-        const photoDiv = document.createElement('div');
-        photoDiv.className = 'photo-item fade-in';
-        photoDiv.dataset.photoId = photo.id;
-
-        photoDiv.innerHTML = `
-            <div class="photo-container">
-                <img src="${photo.src}" alt="${photo.alt}" class="photo-image" 
-                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xMDAgNjBDMTE2LjU2OSA2MCAxMzAgNzMuNDMxIDgzIDEzMEMxMzAgMTQ2LjU2OSAxMTYuNTY5IDE2MCAxMDAgMTYwQzgzLjQzMSAxNjAgNzAgMTQ2LjU2OSA3MCAxMzBDNzAgMTEzLjQzMSA4My40MzEgMTAwIDEwMCAxMDBaIiBmaWxsPSIjRkY2QjlEIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4K'">
-                <div class="photo-overlay">
-                    <div class="photo-caption">${photo.caption}</div>
-                    <div class="photo-date">${this.formatDate(photo.timestamp)}</div>
-                </div>
-            </div>
-        `;
-
-        // Add click event for full view
-        photoDiv.addEventListener('click', () => {
-            this.showPhotoModal(photo);
-        });
-
-        return photoDiv;
-    }
-
-    showPhotoModal(photo) {
-        // Create modal
-        const modal = document.createElement('div');
-        modal.className = 'photo-modal';
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        `;
-
-        modal.innerHTML = `
-            <div class="modal-content" style="
-                max-width: 90%;
-                max-height: 90%;
-                position: relative;
-                background: white;
-                border-radius: 16px;
-                overflow: hidden;
-                transform: scale(0.8);
-                transition: transform 0.3s ease;
-            ">
-                <button class="modal-close" style="
-                    position: absolute;
-                    top: 16px;
-                    right: 16px;
-                    background: rgba(0, 0, 0, 0.5);
-                    color: white;
-                    border: none;
-                    border-radius: 50%;
-                    width: 40px;
-                    height: 40px;
-                    font-size: 20px;
-                    cursor: pointer;
-                    z-index: 1;
-                ">×</button>
-                <img src="${photo.src}" alt="${photo.alt}" style="
-                    width: 100%;
-                    height: auto;
-                    display: block;
-                ">
-                <div style="
-                    padding: 20px;
-                    background: white;
-                ">
-                    <h3 style="margin: 0 0 8px 0; color: var(--primary);">${photo.caption}</h3>
-                    <p style="margin: 0; color: #666; font-size: 14px;">${this.formatDate(photo.timestamp)}</p>
-                </div>
-            </div>
-        `;
-
-        document.body.appendChild(modal);
-
-        // Animate in
-        setTimeout(() => {
-            modal.style.opacity = '1';
-            modal.querySelector('.modal-content').style.transform = 'scale(1)';
-        }, 10);
-
-        // Close modal
-        const closeBtn = modal.querySelector('.modal-close');
-        closeBtn.addEventListener('click', () => {
-            this.closePhotoModal(modal);
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                this.closePhotoModal(modal);
-            }
-        });
-
-        // ESC key to close
-        const handleEsc = (e) => {
-            if (e.key === 'Escape') {
-                this.closePhotoModal(modal);
-                document.removeEventListener('keydown', handleEsc);
-            }
-        };
-        document.addEventListener('keydown', handleEsc);
-    }
-
-    closePhotoModal(modal) {
-        modal.style.opacity = '0';
-        modal.querySelector('.modal-content').style.transform = 'scale(0.8)';
         
-        setTimeout(() => {
-            if (modal.parentNode) {
-                modal.parentNode.removeChild(modal);
-            }
-        }, 300);
+        this.updateFilteredPhotos();
     }
 
-    formatDate(timestamp) {
-        const date = new Date(timestamp);
-        return date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    }
-
-    // Add new photo (for future guest uploads)
-    addPhoto(photoData) {
-        const newPhoto = {
-            id: this.generateId(),
-            src: photoData.src,
-            alt: photoData.alt || 'Wedding Photo',
-            caption: photoData.caption || 'Beautiful moment',
-            timestamp: new Date().toISOString(),
-            category: photoData.category || 'guest'
-        };
-
-        this.photos.unshift(newPhoto);
-        this.savePhotos();
-        this.renderPhotos();
-
-        return newPhoto;
-    }
-
-    generateId() {
-        return 'photo_' + Date.now().toString(36) + Math.random().toString(36).substr(2);
-    }
-
-    savePhotos() {
-        try {
-            localStorage.setItem('wedding_photos', JSON.stringify(this.photos));
-        } catch (error) {
-            console.warn('Could not save photos:', error);
+    // Load data from localStorage
+    loadFromStorage() {
+        const savedLikes = localStorage.getItem('photo-likes');
+        if (savedLikes) {
+            this.likedPhotos = new Set(JSON.parse(savedLikes));
+        }
+        
+        const savedComments = localStorage.getItem('photo-comments');
+        if (savedComments) {
+            this.comments = JSON.parse(savedComments);
         }
     }
 
-    // Get photo statistics
-    getPhotoStats() {
-        const categories = {};
-        this.photos.forEach(photo => {
-            categories[photo.category] = (categories[photo.category] || 0) + 1;
+    // Save data to localStorage
+    saveToStorage() {
+        localStorage.setItem('photo-likes', JSON.stringify([...this.likedPhotos]));
+        localStorage.setItem('photo-comments', JSON.stringify(this.comments));
+    }
+
+    // Bind event listeners
+    bindEvents() {
+        // Category filter buttons
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.filterByCategory(e.target.dataset.category);
+            });
         });
 
-        return {
-            total: this.photos.length,
-            categories: categories,
-            recent: this.photos.filter(photo => {
-                const photoDate = new Date(photo.timestamp);
-                const weekAgo = new Date();
-                weekAgo.setDate(weekAgo.getDate() - 7);
-                return photoDate > weekAgo;
-            }).length
-        };
+        // Photo upload
+        const uploadBtn = document.getElementById('upload-photo-btn');
+        const uploadInput = document.getElementById('photo-upload-input');
+        
+        uploadBtn?.addEventListener('click', () => uploadInput.click());
+        uploadInput?.addEventListener('change', (e) => this.handlePhotoUpload(e));
+
+        // Modal controls
+        document.getElementById('modal-close')?.addEventListener('click', () => this.closeModal());
+        document.getElementById('modal-prev')?.addEventListener('click', () => this.navigateModal(-1));
+        document.getElementById('modal-next')?.addEventListener('click', () => this.navigateModal(1));
+        document.getElementById('modal-like-btn')?.addEventListener('click', () => this.toggleModalLike());
+
+        // Close modal on overlay click
+        document.getElementById('photo-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'photo-modal') {
+                this.closeModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('photo-modal');
+            if (modal?.classList.contains('active')) {
+                switch(e.key) {
+                    case 'Escape':
+                        this.closeModal();
+                        break;
+                    case 'ArrowLeft':
+                        this.navigateModal(-1);
+                        break;
+                    case 'ArrowRight':
+                        this.navigateModal(1);
+                        break;
+                }
+            }
+        });
     }
 
     // Filter photos by category
     filterByCategory(category) {
-        if (category === 'all') {
-            this.renderPhotos();
+        this.currentCategory = category;
+        
+        // Update active button
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.category === category);
+        });
+        
+        this.updateFilteredPhotos();
+        this.renderPhotos();
+    }
+
+    // Update filtered photos array
+    updateFilteredPhotos() {
+        if (this.currentCategory === 'all') {
+            this.filteredPhotos = [...this.photos];
+        } else {
+            this.filteredPhotos = this.photos.filter(photo => photo.category === this.currentCategory);
+        }
+    }
+
+        // Render photos in grid
+    renderPhotos() {
+        console.log('📸 Rendering photos...', this.filteredPhotos.length, 'photos');
+        console.log('📸 Photos data:', this.filteredPhotos);
+        const grid = document.getElementById('photo-grid');
+        console.log('📸 Grid element:', grid);
+        if (!grid) {
+            console.error('❌ Photo grid element not found!');
             return;
         }
 
-        const filteredPhotos = this.photos.filter(photo => photo.category === category);
-        this.renderFilteredPhotos(filteredPhotos);
-    }
-
-    renderFilteredPhotos(filteredPhotos) {
-        if (!this.photoGallery) return;
-
-        this.photoGallery.innerHTML = '';
-
-        if (filteredPhotos.length === 0) {
-            this.photoGallery.innerHTML = `
-                <div class="photo-placeholder">
-                    <p>No photos in this category 📸</p>
+        if (this.filteredPhotos.length === 0) {
+            grid.innerHTML = `
+                <div class="photo-empty">
+                    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    <p>No photos in this category yet</p>
                 </div>
             `;
             return;
         }
 
-        filteredPhotos.forEach(photo => {
-            const photoElement = this.createPhotoElement(photo);
-            this.photoGallery.appendChild(photoElement);
-        });
+        try {
+            const photosHTML = this.filteredPhotos.map((photo, index) => {
+                console.log('📸 Rendering photo:', photo.id, photo.url);
+                return `
+                    <div class="photo-card" data-photo-index="${index}" onclick="window.photoWall && window.photoWall.openModal(${index})">
+                        <div class="photo-card-image-container">
+                            <img class="photo-card-image" src="${encodeURI(photo.url)}" alt="${photo.caption}" loading="lazy" 
+                                 onerror="console.error('❌ Failed to load image:', this.src);">
+                            <div class="photo-card-overlay"></div>
+                            <svg class="photo-card-camera" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="photo-card-content">
+                            <p class="photo-card-caption">${photo.caption}</p>
+                            <div class="photo-card-meta">
+                                <div class="photo-card-info">
+                                    <p class="photo-card-author">${photo.author}</p>
+                                    <p class="photo-card-date">${photo.timestamp.toLocaleDateString()}</p>
+                                </div>
+                                <button class="like-btn ${this.likedPhotos.has(photo.id) ? 'liked' : ''}" onclick="event.stopPropagation(); window.photoWall && window.photoWall.toggleLike('${photo.id}')">
+                                    <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                    </svg>
+                                    ${photo.likes + (this.likedPhotos.has(photo.id) ? 1 : 0)}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            grid.innerHTML = photosHTML;
+            console.log('✅ Photos rendered successfully! Count:', this.filteredPhotos.length);
+        } catch (error) {
+            console.error('❌ Error rendering photos:', error);
+            grid.innerHTML = '<div class="photo-empty"><p>Error loading photos: ' + error.message + '</p></div>';
+        }
     }
 
-    // Export photos (for couple)
-    exportPhotos() {
-        return {
-            photos: this.photos,
-            stats: this.getPhotoStats(),
-            exportDate: new Date().toISOString()
+    // Toggle like for a photo
+    toggleLike(photoId) {
+        if (this.likedPhotos.has(photoId)) {
+            this.likedPhotos.delete(photoId);
+        } else {
+            this.likedPhotos.add(photoId);
+        }
+        
+        this.saveToStorage();
+        this.renderPhotos();
+        
+        // Update modal if open
+        const modal = document.getElementById('photo-modal');
+        if (modal?.classList.contains('active')) {
+            this.updateModalLikeButton();
+        }
+    }
+
+    // Open photo modal
+    openModal(index) {
+        console.log('Opening modal for photo', index);
+        this.selectedPhotoIndex = index;
+        const photo = this.filteredPhotos[index];
+        
+        // Update modal content
+        const modalImage = document.getElementById('modal-image');
+        const modalCaption = document.getElementById('modal-caption');
+        const modalAuthor = document.getElementById('modal-author');
+        const modalDate = document.getElementById('modal-date');
+        
+        if (modalImage) modalImage.src = photo.url;
+        if (modalImage) modalImage.alt = photo.caption;
+        if (modalCaption) modalCaption.textContent = photo.caption;
+        if (modalAuthor) modalAuthor.textContent = photo.author;
+        if (modalDate) modalDate.textContent = photo.timestamp.toLocaleDateString();
+        
+        this.updateModalLikeButton();
+        
+        // Show modal
+        const modal = document.getElementById('photo-modal');
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    // Close photo modal
+    closeModal() {
+        const modal = document.getElementById('photo-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Navigate modal (prev/next)
+    navigateModal(direction) {
+        this.selectedPhotoIndex += direction;
+        
+        if (this.selectedPhotoIndex < 0) {
+            this.selectedPhotoIndex = this.filteredPhotos.length - 1;
+        } else if (this.selectedPhotoIndex >= this.filteredPhotos.length) {
+            this.selectedPhotoIndex = 0;
+        }
+        
+        const photo = this.filteredPhotos[this.selectedPhotoIndex];
+        
+        // Update modal content
+        document.getElementById('modal-image').src = photo.url;
+        document.getElementById('modal-image').alt = photo.caption;
+        document.getElementById('modal-caption').textContent = photo.caption;
+        document.getElementById('modal-author').textContent = photo.author;
+        document.getElementById('modal-date').textContent = photo.timestamp.toLocaleDateString();
+        
+        this.updateModalLikeButton();
+    }
+
+    // Toggle like in modal
+    toggleModalLike() {
+        const photo = this.filteredPhotos[this.selectedPhotoIndex];
+        this.toggleLike(photo.id);
+    }
+
+    // Update modal like button
+    updateModalLikeButton() {
+        const photo = this.filteredPhotos[this.selectedPhotoIndex];
+        const likeBtn = document.getElementById('modal-like-btn');
+        const likeCount = document.getElementById('modal-like-count');
+        
+        const isLiked = this.likedPhotos.has(photo.id);
+        likeBtn.classList.toggle('liked', isLiked);
+        likeCount.textContent = photo.likes + (isLiked ? 1 : 0);
+    }
+
+    // Handle photo upload
+    handlePhotoUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file');
+            return;
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Image size should be less than 5MB');
+            return;
+        }
+
+        // Create preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            // In a real app, you'd upload to a server
+            // For now, we'll just show a success message
+            this.showUploadSuccess();
         };
+        reader.readAsDataURL(file);
+
+        // Reset input
+        event.target.value = '';
+    }
+
+    // Show upload success message
+    showUploadSuccess() {
+        // Create temporary success message
+        const message = document.createElement('div');
+        message.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        `;
+        message.textContent = 'Photo uploaded successfully! 📸';
+        
+        document.body.appendChild(message);
+        
+        setTimeout(() => {
+            message.remove();
+        }, 3000);
     }
 }
 
-// ===== INITIALIZATION =====
+// Make PhotoWall available globally - will be initialized by main app
+// when photo wall section is accessed
+console.log('📸 PhotoWall class loaded');
 
-// Initialize photo wall when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Wait for main app to initialize
-    setTimeout(() => {
-        if (window.weddingApp) {
-            window.photoWall = new PhotoWall();
-        }
-    }, 100);
-}); 
+// Make PhotoWall globally available immediately
+if (typeof window !== 'undefined') {
+    window.PhotoWall = PhotoWall;
+    console.log('📸 PhotoWall class attached to window');
+}
+
+// Add animation keyframes
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+`;
+document.head.appendChild(style); 

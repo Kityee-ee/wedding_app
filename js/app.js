@@ -115,7 +115,35 @@ class WeddingApp {
 
     initPhotoWall() {
         // Initialize photo wall functionality
-        console.log('Initializing photo wall...');
+        console.log('🖼️ Initializing photo wall...');
+        
+        const photoGrid = document.getElementById('photo-grid');
+        console.log('Photo grid element:', photoGrid);
+        
+        // Check if PhotoWall class is available
+        if (typeof PhotoWall === 'undefined') {
+            console.error('PhotoWall class not found! Make sure photo-wall.js is loaded.');
+            return;
+        }
+        
+        // Initialize PhotoWall if not already done
+        if (!window.photoWall) {
+            if (photoGrid) {
+                console.log('Creating new PhotoWall instance...');
+                try {
+                    window.photoWall = new PhotoWall();
+                    console.log('PhotoWall created successfully:', window.photoWall);
+                } catch (error) {
+                    console.error('Error creating PhotoWall:', error);
+                }
+            } else {
+                console.error('Photo grid element not found!');
+            }
+        } else {
+            console.log('PhotoWall already exists, re-rendering...');
+            // Re-render photos if already initialized
+            window.photoWall.renderPhotos();
+        }
     }
 
     hideLoadingScreen() {
