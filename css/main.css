@@ -70,9 +70,18 @@ body {
     color: var(--white);
 }
 
-.loading-heart {
-    font-size: 4rem;
+.loading-content p {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.loading-icon {
+    width: 64px;
+    height: 64px;
     animation: pulse 2s infinite;
+    margin-bottom: var(--spacing-sm);
 }
 
 @keyframes pulse {
@@ -1583,40 +1592,42 @@ body {
 /* Category Filter */
 .photo-categories {
     display: flex;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-md);
     justify-content: center;
-    margin-bottom: var(--spacing-lg);
+    margin: var(--spacing-lg) 0 var(--spacing-xl);
     flex-wrap: wrap;
 }
 
 .category-btn {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background: var(--white);
-    border: 2px solid var(--accent);
-    border-radius: 25px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 50px;
     color: var(--accent);
     font-family: var(--font-body);
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 400;
     cursor: pointer;
     transition: var(--transition);
     min-height: 44px;
+    min-width: 100px;
 }
 
-.category-btn:hover,
+.category-btn:hover {
+    background: rgba(212, 148, 148, 0.1);
+}
+
 .category-btn.active {
     background: var(--accent);
     color: var(--white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(212, 148, 148, 0.3);
 }
 
 /* Photo Grid */
 .photo-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
     width: 100%;
 }
 
@@ -1640,17 +1651,16 @@ body {
 .photo-card {
     position: relative;
     background: var(--white);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: 0 4px 12px var(--shadow);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     cursor: pointer;
     transition: var(--transition);
-    group: true;
 }
 
 .photo-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
 .photo-card-image-container {
@@ -1697,24 +1707,22 @@ body {
 
 /* Photo Card Content */
 .photo-card-content {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--white);
 }
 
 .photo-card-caption {
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: var(--text);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
     line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .photo-card-meta {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: var(--accent);
 }
 
 .photo-card-info {
@@ -1722,16 +1730,16 @@ body {
 }
 
 .photo-card-author {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: var(--text);
-    opacity: 0.6;
-    margin-bottom: 2px;
+    opacity: 0.7;
+    margin-bottom: 4px;
 }
 
 .photo-card-date {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: var(--text);
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 /* Like Button */
@@ -1951,43 +1959,60 @@ body {
 }
 
 /* Upload Section */
-.photo-upload-section {
-    margin-top: var(--spacing-xl);
+.upload-card {
+    border: 1px dashed var(--accent);
+    background: rgba(212, 148, 148, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+}
+
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
     padding: var(--spacing-lg);
-    background: var(--white);
-    border-radius: var(--radius-md);
-    box-shadow: 0 4px 12px var(--shadow);
     text-align: center;
+    height: 100%;
+}
+
+.upload-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.8;
 }
 
 .upload-title {
     font-family: var(--font-heading);
     font-size: 1.5rem;
-    color: var(--text);
+    color: var(--accent);
     margin-bottom: var(--spacing-sm);
+    line-height: 1.3;
 }
 
 .upload-btn {
-    background: var(--primary);
+    background: var(--accent);
     color: var(--white);
     border: none;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: 25px;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border-radius: 50px;
     font-family: var(--font-body);
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     transition: var(--transition);
-    min-height: 48px;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
+    min-height: 44px;
+    min-width: 160px;
 }
 
 .upload-btn:hover {
-    background: #e55a8a;
+    background: #c88484;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 4px 12px rgba(212, 148, 148, 0.3);
 }
 
 /* Empty State */

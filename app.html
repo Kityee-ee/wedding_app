@@ -22,8 +22,8 @@
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
-            <div class="loading-heart">💕</div>
-            <p>Loading...</p>
+                            <img src="assets/photos/cheers.png?v=3" alt="Cheers" class="loading-icon">
+                <p>Loading...</p>
         </div>
     </div>
 
@@ -151,24 +151,20 @@
                             <button class="category-btn" data-category="wedding">Wedding Day</button>
                         </div>
                     </div>
-                    
+
                     <!-- Photo Grid -->
                     <div class="photo-grid" id="photo-grid">
+                        <!-- Upload Section as first card -->
+                        <div class="photo-card upload-card">
+                            <div class="upload-content">
+                                <img src="assets/photos/photo.png" alt="Camera" class="upload-icon">
+                                <h3 class="upload-title">Share your photos from today!</h3>
+                                <button class="upload-btn" id="upload-photo-btn">Upload Photo</button>
+                                <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
                         <!-- Photos will be loaded here -->
                     </div>
-                    
-                    <!-- Upload Section -->
-                    <div class="photo-upload-section">
-                        <h3 class="upload-title">Share Your Photos</h3>
-                        <p class="photo-wall-subtitle">Help us capture every moment</p>
-                        <button class="upload-btn" id="upload-photo-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                                <circle cx="12" cy="13" r="4"></circle>
-                            </svg>
-                            Upload Photo
-                        </button>
-                        <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
                     </div>
                 </div>
             </section>

@@ -35,7 +35,7 @@ body.landing-body{margin:0;background:var(--bg);color:var(--text);font-family:va
 
 /* CTA */
 .cta{padding:24px 0;display:flex;justify-content:center}
-.welcome-btn{display:block;width:100%;max-width:640px;text-align:center;text-decoration:none;background:var(--accent);color:#fff;padding:18px;border-radius:12px;font-weight:700;letter-spacing:.5px;font-size:18px;box-shadow:0 8px 20px rgba(212,148,148,.35);transition:transform .2s ease,opacity .2s ease}
+.welcome-btn{display:block;width:100%;max-width:640px;text-align:center;text-decoration:none;background:var(--accent);color:#fff;padding:18px;border-radius:12px;font-family:var(--font-heading);font-weight:700;letter-spacing:1px;font-size:20px;box-shadow:0 8px 20px rgba(212,148,148,.35);transition:transform .2s ease,opacity .2s ease}
 .welcome-btn:active{transform:scale(.98)}
 
 /* Footer */

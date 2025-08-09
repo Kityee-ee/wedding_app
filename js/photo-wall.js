@@ -278,8 +278,20 @@ class PhotoWall {
             return;
         }
 
+        // Always show upload card, even when no photos
+        const uploadCard = `
+            <div class="photo-card upload-card">
+                <div class="upload-content">
+                    <img src="assets/photos/photo.png" alt="Camera" class="upload-icon">
+                    <h3 class="upload-title">Share your photos from today!</h3>
+                    <button class="upload-btn" id="upload-photo-btn">Upload Photo</button>
+                    <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
+                </div>
+            </div>
+        `;
+
         if (this.filteredPhotos.length === 0) {
-            grid.innerHTML = `
+            grid.innerHTML = uploadCard + `
                 <div class="photo-empty">
                     <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
@@ -324,7 +336,18 @@ class PhotoWall {
                 `;
             }).join('');
             
-            grid.innerHTML = photosHTML;
+            // Add upload card to the beginning of the grid
+            const uploadCard = `
+                <div class="photo-card upload-card">
+                    <div class="upload-content">
+                        <img src="assets/photos/photo.png" alt="Camera" class="upload-icon">
+                        <h3 class="upload-title">Share your photos from today!</h3>
+                        <button class="upload-btn" id="upload-photo-btn">Upload Photo</button>
+                        <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+            `;
+            grid.innerHTML = uploadCard + photosHTML;
             console.log('✅ Photos rendered successfully! Count:', this.filteredPhotos.length);
         } catch (error) {
             console.error('❌ Error rendering photos:', error);
