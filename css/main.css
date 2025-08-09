@@ -3,10 +3,10 @@
 /* CSS Variables - Design System */
 :root {
     /* Colors */
-    --primary: #FF6B9D;
-    --secondary: #4ECDC4;
-    --accent: #FFE66D;
-    --background: #FFF8F0;
+    --primary: #fdd1d2;
+    --secondary: #d4bbdd;
+    --accent: #D49494;
+    --background: #fbede0;
     --text: #2C3E50;
     --white: #FFFFFF;
     --shadow: rgba(0, 0, 0, 0.1);
@@ -14,7 +14,7 @@
     /* Typography */
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
-    --font-accent: 'Dancing Script', cursive;
+    --font-accent: 'Alex Brush', cursive;
     
     /* Spacing */
     --spacing-xs: 8px;
@@ -96,7 +96,7 @@ body {
 /* ===== NAVIGATION ===== */
 .nav-bar {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: var(--white);
+    color: var(--accent);
     padding: var(--spacing-sm);
     position: sticky;
     top: 0;
@@ -116,6 +116,7 @@ body {
     font-family: var(--font-heading);
     font-size: 1.5rem;
     font-weight: 700;
+    color: var(--accent);
 }
 
 .nav-date {
@@ -158,12 +159,13 @@ body {
 
 /* ===== TYPOGRAPHY ===== */
 .section-title {
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    font-weight: 700;
+    font-family: var(--font-accent);
+    font-size: 3rem;
+    font-weight: 400;
     text-align: center;
-    margin-bottom: var(--spacing-sm);
-    color: var(--primary);
+    margin-bottom: var(--spacing-xs);
+    color: var(--accent);
+    letter-spacing: 1px;
 }
 
 .section-subtitle {
@@ -721,13 +723,15 @@ body {
 }
 
 .nav-btn.active {
-    color: var(--primary);
-    background: rgba(255, 107, 157, 0.1);
+    color: var(--accent);
+    background: rgba(212, 148, 148, 0.1);
 }
 
 .nav-icon {
-    font-size: 1.5rem;
+    width: 24px;
+    height: 24px;
     margin-bottom: 4px;
+    object-fit: contain;
 }
 
 .nav-label {
@@ -1561,13 +1565,13 @@ body {
 }
 
  .photo-wall-title {
-     font-family: var(--font-heading);
-     font-size: 3rem;
-     color: var(--primary);
-     margin-bottom: var(--spacing-xs);
-     font-weight: 700;
-     letter-spacing: 2px;
- }
+    font-family: var(--font-accent);
+    font-size: 3rem;
+    color: var(--accent);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 400;
+    letter-spacing: 1px;
+}
 
 .photo-wall-subtitle {
     color: var(--text);
@@ -1588,9 +1592,9 @@ body {
 .category-btn {
     padding: var(--spacing-xs) var(--spacing-sm);
     background: var(--white);
-    border: 2px solid var(--primary);
+    border: 2px solid var(--accent);
     border-radius: 25px;
-    color: var(--primary);
+    color: var(--accent);
     font-family: var(--font-body);
     font-size: 0.875rem;
     font-weight: 500;
@@ -1601,10 +1605,10 @@ body {
 
 .category-btn:hover,
 .category-btn.active {
-    background: var(--primary);
+    background: var(--accent);
     color: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 4px 12px rgba(212, 148, 148, 0.3);
 }
 
 /* Photo Grid */

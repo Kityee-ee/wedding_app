@@ -1,9 +1,9 @@
 /* Landing Page Styles — mobile-first */
 :root{
-  --primary:#FF6B9D; /* soft pink */
-  --secondary:#4ECDC4; /* mint */
-  --accent:#FFE66D; /* warm yellow */
-  --bg:#FFF8F0; /* warm white */
+  --primary:#fdd1d2; /* soft pink */
+  --secondary:#d4bbdd; /* mint */
+  --accent:#D49494; /* accent */
+  --bg:#fbede0; /* background */
   --text:#2C3E50; /* dark blue-gray */
   --font-heading:'Playfair Display', serif;
   --font-body:'Inter', sans-serif;
@@ -18,7 +18,7 @@ body.landing-body{margin:0;background:var(--bg);color:var(--text);font-family:va
 
 /* Header */
 .landing-header{width:100%;padding:24px 16px;display:flex;justify-content:center}
-.eyebrow{font-family:var(--font-heading);font-size:26px;letter-spacing:2px;color:#B77284}
+.eyebrow{font-family:var(--font-heading);font-size:26px;letter-spacing:2px;color:var(--accent)}
 
 /* Hero */
 .hero{width:100%;max-width:480px;padding:0 16px 24px}
@@ -28,14 +28,14 @@ body.landing-body{margin:0;background:var(--bg);color:var(--text);font-family:va
 
 .hero-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .names{display:flex;align-items:center;gap:16px}
-.name{font-family:var(--font-heading);font-weight:700;letter-spacing:8px;color:#9C6A1D;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.name{font-family:var(--font-heading);font-weight:700;letter-spacing:8px;color:var(--accent);text-shadow:0 1px 0 rgba(255,255,255,.7)}
 .name.left{animation:fadeInLeft .8s ease both .1s}
 .name.right{animation:fadeInRight .8s ease both .1s}
 .ring{font-size:28px;transform:translateY(-2px);animation:pop .7s ease .4s both}
 
 /* CTA */
 .cta{padding:24px 0;display:flex;justify-content:center}
-.welcome-btn{display:block;width:100%;max-width:640px;text-align:center;text-decoration:none;background:#DFA1A4;color:#fff;padding:18px;border-radius:12px;font-weight:700;letter-spacing:.5px;font-size:18px;box-shadow:0 8px 20px rgba(223,161,164,.35);transition:transform .2s ease,opacity .2s ease}
+.welcome-btn{display:block;width:100%;max-width:640px;text-align:center;text-decoration:none;background:var(--accent);color:#fff;padding:18px;border-radius:12px;font-weight:700;letter-spacing:.5px;font-size:18px;box-shadow:0 8px 20px rgba(212,148,148,.35);transition:transform .2s ease,opacity .2s ease}
 .welcome-btn:active{transform:scale(.98)}
 
 /* Footer */
