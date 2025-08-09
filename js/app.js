@@ -7,13 +7,12 @@ class WeddingApp {
         this.init();
     }
 
-         init() {
-         this.setupEventListeners();
-         this.hideLoadingScreen();
-         this.loadSavedData();
-         this.setupLandingOverlay();
-         console.log('💕 Wedding App initialized successfully!');
-     }
+    init() {
+        this.setupEventListeners();
+        this.hideLoadingScreen();
+        this.loadSavedData();
+        console.log('💕 Wedding App initialized successfully!');
+    }
 
     setupEventListeners() {
         // Bottom navigation
@@ -145,29 +144,6 @@ class WeddingApp {
         } catch (error) {
             console.warn('Could not load saved data:', error);
         }
-    }
-
-    setupLandingOverlay() {
-        const overlay = document.getElementById('landing-overlay');
-        const welcomeBtn = document.getElementById('welcome-btn');
-        if (!overlay || !welcomeBtn) return;
-
-        // Show overlay on first load only per session
-        const seen = sessionStorage.getItem('seen_landing_overlay');
-        if (seen === '1') {
-            overlay.style.display = 'none';
-            return;
-        }
-
-        welcomeBtn.addEventListener('click', () => {
-            overlay.classList.add('hidden');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                // Ensure we are on Bubble Sign-in first
-                this.navigateToSection('bubble-signin');
-            }, 300);
-            sessionStorage.setItem('seen_landing_overlay', '1');
-        });
     }
 
     // Utility methods

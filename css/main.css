@@ -1538,21 +1538,3 @@ body {
         opacity: 1;
     }
 } 
-
-/* ===== LANDING OVERLAY ===== */
-.landing-overlay{position:fixed;inset:0;background:var(--background);display:flex;flex-direction:column;align-items:center;z-index:1200;overflow:auto;padding-bottom:24px}
-.landing-overlay.hidden{opacity:0;pointer-events:none;transition:opacity .3s ease}
-.landing-eyebrow{font-family:var(--font-heading);font-size:26px;letter-spacing:2px;color:#B77284;padding:24px 16px}
-.landing-hero{width:100%;max-width:480px;padding:0 16px}
-.landing-hero-img{width:100%;height:auto;border-radius:12px;display:block}
-.landing-hero-overlay{position:relative;margin-top:-48%;pointer-events:none}
-.landing-names{position:absolute;top:-40vw;left:0;right:0;display:flex;justify-content:center;gap:16px}
-.landing-name{font-family:var(--font-heading);font-weight:700;letter-spacing:8px;color:#9C6A1D;text-shadow:0 1px 0 rgba(255,255,255,.7)}
-.landing-ring{font-size:24px;transform:translateY(-2px)}
-.landing-welcome-btn{margin:24px 16px 12px;background:#DFA1A4;color:#fff;border:none;border-radius:12px;padding:16px 24px;width:calc(100% - 32px);max-width:640px;font-weight:700;letter-spacing:.5px;box-shadow:0 8px 20px rgba(223,161,164,.35)}
-.landing-welcome-btn:active{transform:scale(.98)}
-.landing-date{color:#815a63;font-size:14px}
-
-@media (max-width:360px){
-  .landing-name{letter-spacing:6px}
-} 
