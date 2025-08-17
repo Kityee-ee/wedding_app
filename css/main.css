@@ -48,6 +48,9 @@ body {
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* iOS Safari scrolling fixes */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
 }
 
 /* ===== LOADING SCREEN ===== */
@@ -137,15 +140,13 @@ body {
 .main-content {
     flex: 1;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
  .section {
-     position: absolute;
-     top: 0;
-     left: 0;
+     position: relative;
      width: 100%;
-     height: 100%;
+     min-height: 100vh;
      opacity: 0;
      transform: translateX(100%);
      transition: var(--transition);
@@ -153,11 +154,20 @@ body {
      padding-bottom: 100px; /* Space for bottom nav */
      overflow-y: auto;
      -webkit-overflow-scrolling: touch;
+     display: none;
+     box-sizing: border-box;
+     height: auto;
+     /* Mobile scrolling fixes */
+     scroll-behavior: smooth;
+     overscroll-behavior: contain;
+     /* Ensure proper height calculation */
+     min-height: calc(100vh - 100px);
  }
 
 .section.active {
     opacity: 1;
     transform: translateX(0);
+    display: block;
 }
 
 .container {
@@ -2066,4 +2076,95 @@ body {
         padding: 8px 12px;
         font-size: 0.8rem;
     }
+} 
+
+/* ===== COUPLE'S STORY ===== */
+.story-timeline {
+    margin: var(--spacing-xl) 0;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(78, 205, 196, 0.1));
+    border-radius: 16px;
+    border-left: 4px solid var(--primary);
+}
+
+.timeline-date {
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-right: var(--spacing-md);
+    min-width: 80px;
+}
+
+.timeline-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text);
+}
+
+.timeline-content p {
+    color: var(--text);
+    opacity: 0.8;
+    margin: 0;
+}
+
+/* ===== BLESSING WALL ===== */
+.blessing-form {
+    margin: var(--spacing-xl) 0;
+    text-align: center;
+}
+
+.blessing-input {
+    width: 100%;
+    min-height: 120px;
+    padding: var(--spacing-md);
+    border: 2px solid var(--secondary);
+    border-radius: 16px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    resize: vertical;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.blessing-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.2);
+}
+
+.blessings-container {
+    margin-top: var(--spacing-xl);
+}
+
+.blessing-item {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(78, 205, 196, 0.1));
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-radius: 16px;
+    border-left: 4px solid var(--secondary);
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.blessing-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: var(--spacing-sm);
+    font-style: italic;
+}
+
+.blessing-author {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-weight: 500;
+    display: block;
+    text-align: right;
 } 

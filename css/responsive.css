@@ -171,6 +171,24 @@
         font-size: 16px; /* Prevents zoom on iOS */
         padding: var(--spacing-md);
     }
+    
+    /* Mobile scrolling improvements */
+    .section {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        overscroll-behavior: contain;
+    }
+    
+    /* Ensure touch scrolling works on iOS */
+    body {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: hidden;
+    }
+    
+    /* Fix for iOS momentum scrolling */
+    .main-content {
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 /* Landscape Orientation */

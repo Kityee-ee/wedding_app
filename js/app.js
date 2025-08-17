@@ -11,7 +11,53 @@ class WeddingApp {
         this.setupEventListeners();
         this.hideLoadingScreen();
         this.loadSavedData();
+        this.detectMobileAndLog();
         console.log('💕 Wedding App initialized successfully!');
+    }
+
+    detectMobileAndLog() {
+        // Detect mobile device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+        
+        console.log('📱 Device Info:', {
+            isMobile,
+            isIOS,
+            isSafari,
+            userAgent: navigator.userAgent,
+            viewport: {
+                width: window.innerWidth,
+                height: window.innerHeight,
+                devicePixelRatio: window.devicePixelRatio
+            }
+        });
+        
+        // Log section heights for debugging
+        setTimeout(() => {
+            this.logSectionHeights();
+        }, 1000);
+    }
+
+    logSectionHeights() {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const scrollHeight = section.scrollHeight;
+            const clientHeight = section.clientHeight;
+            
+            console.log(`📏 Section ${section.id}:`, {
+                scrollHeight,
+                clientHeight,
+                rect: {
+                    top: rect.top,
+                    bottom: rect.bottom,
+                    height: rect.height
+                },
+                overflow: getComputedStyle(section).overflow,
+                position: getComputedStyle(section).position
+            });
+        });
     }
 
     setupEventListeners() {
@@ -39,12 +85,39 @@ class WeddingApp {
             lastTouchEnd = now;
         }, false);
 
-        // Prevent pull-to-refresh on mobile
+        // Note: Removed touchmove prevention to allow natural mobile scrolling
+        // The CSS overflow-y: auto and -webkit-overflow-scrolling: touch will handle scrolling
+        
+        // Add touch event logging for debugging
+        this.setupTouchEventLogging();
+    }
+
+    setupTouchEventLogging() {
+        // Log touch events for debugging
+        document.addEventListener('touchstart', (e) => {
+            console.log('👆 Touch Start:', {
+                touches: e.touches.length,
+                target: e.target.tagName,
+                className: e.target.className
+            });
+        }, { passive: true });
+
         document.addEventListener('touchmove', (e) => {
-            if (e.target.closest('.main-content')) {
-                e.preventDefault();
-            }
-        }, { passive: false });
+            console.log('👆 Touch Move:', {
+                touches: e.touches.length,
+                target: e.target.tagName,
+                className: e.target.className,
+                preventDefault: e.defaultPrevented
+            });
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            console.log('👆 Touch End:', {
+                touches: e.changedTouches.length,
+                target: e.target.tagName,
+                className: e.target.className
+            });
+        }, { passive: true });
     }
 
     navigateToSection(sectionName) {
