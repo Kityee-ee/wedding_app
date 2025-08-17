@@ -206,6 +206,11 @@ class WeddingApp {
                 try {
                     window.photoWall = new PhotoWall();
                     console.log('PhotoWall created successfully:', window.photoWall);
+                    
+                    // Test upload functionality
+                    setTimeout(() => {
+                        this.testPhotoUpload();
+                    }, 1000);
                 } catch (error) {
                     console.error('Error creating PhotoWall:', error);
                 }
@@ -216,6 +221,30 @@ class WeddingApp {
             console.log('PhotoWall already exists, re-rendering...');
             // Re-render photos if already initialized
             window.photoWall.renderPhotos();
+        }
+    }
+
+    // Test photo upload functionality
+    testPhotoUpload() {
+        console.log('🧪 Testing photo upload functionality...');
+        
+        const uploadBtn = document.getElementById('upload-photo-btn');
+        const uploadInput = document.getElementById('photo-upload-input');
+        
+        console.log('Upload button found:', !!uploadBtn);
+        console.log('Upload input found:', !!uploadInput);
+        
+        if (uploadBtn) {
+            console.log('Button properties:', {
+                offsetWidth: uploadBtn.offsetWidth,
+                offsetHeight: uploadBtn.offsetHeight,
+                style: {
+                    display: uploadBtn.style.display,
+                    visibility: uploadBtn.style.visibility,
+                    pointerEvents: uploadBtn.style.pointerEvents,
+                    zIndex: uploadBtn.style.zIndex
+                }
+            });
         }
     }
 

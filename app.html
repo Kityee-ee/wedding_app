@@ -184,7 +184,6 @@
                                 <img src="assets/photos/photo.png" alt="Camera" class="upload-icon">
                                 <h3 class="upload-title">Share your photos from today!</h3>
                                 <button class="upload-btn" id="upload-photo-btn">Upload Photo</button>
-                                <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
                             </div>
                         </div>
                         <!-- Photos will be loaded here -->
@@ -254,6 +253,76 @@
                             <span id="modal-like-count">0</span>
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo Upload Modal -->
+        <div class="photo-upload-modal" id="photo-upload-modal">
+            <div class="upload-modal-overlay"></div>
+            <div class="upload-modal-content">
+                <div class="upload-modal-header">
+                    <h3 class="upload-modal-title">Share Your Photo 📸</h3>
+                    <button class="upload-modal-close" id="upload-modal-close">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="upload-modal-body">
+                    <!-- Caption Input Section -->
+                    <div class="caption-section">
+                        <label for="photo-caption-input" class="caption-label">Add a caption (optional)</label>
+                        <input 
+                            type="text" 
+                            id="photo-caption-input" 
+                            placeholder="Add a caption (optional)" 
+                            class="caption-input"
+                            maxlength="100"
+                        >
+                        <div class="caption-counter">
+                            <span id="caption-char-count">0</span>/100
+                        </div>
+                    </div>
+                    
+                    <!-- Photo Upload Section -->
+                    <div class="photo-upload-section">
+                        <div class="upload-area" id="upload-area">
+                            <div class="upload-icon-container">
+                                <svg class="upload-arrow-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7,10 12,15 17,10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </div>
+                            <p class="upload-text">Click to upload photo</p>
+                            <p class="upload-hint">or drag and drop</p>
+                            <input 
+                                type="file" 
+                                id="photo-upload-input" 
+                                accept="image/*" 
+                                class="photo-file-input"
+                            >
+                        </div>
+                        
+                        <!-- Preview Section -->
+                        <div class="photo-preview" id="photo-preview" style="display: none;">
+                            <img id="preview-image" class="preview-image" src="" alt="Photo preview">
+                            <button class="remove-photo-btn" id="remove-photo-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="upload-modal-footer">
+                    <button class="btn btn-secondary" id="cancel-upload-btn">Cancel</button>
+                    <button class="btn btn-primary" id="submit-upload-btn" disabled>Upload Photo</button>
                 </div>
             </div>
         </div>
