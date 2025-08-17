@@ -248,16 +248,39 @@ class PhotoWall {
 
     // Bind main upload button (the one in the photo grid)
     bindMainUploadButton() {
+        console.log('🔍 Looking for upload button...');
         const uploadBtn = document.getElementById('upload-photo-btn');
+        console.log('Upload button element:', uploadBtn);
+        
         if (uploadBtn) {
+            // Check button properties
+            console.log('Button properties:', {
+                offsetWidth: uploadBtn.offsetWidth,
+                offsetHeight: uploadBtn.offsetHeight,
+                display: window.getComputedStyle(uploadBtn).display,
+                visibility: window.getComputedStyle(uploadBtn).visibility,
+                pointerEvents: window.getComputedStyle(uploadBtn).pointerEvents,
+                zIndex: window.getComputedStyle(uploadBtn).zIndex,
+                position: window.getComputedStyle(uploadBtn).position
+            });
+            
             // Remove any existing listeners to prevent duplicates
             uploadBtn.removeEventListener('click', this.handleUploadClick);
             
             // Add new listener
             uploadBtn.addEventListener('click', this.handleUploadClick.bind(this));
-            console.log('✅ Main upload button event bound');
+            console.log('✅ Main upload button event bound successfully');
+            
+            // Test if button is clickable
+            uploadBtn.style.cursor = 'pointer';
+            uploadBtn.style.userSelect = 'none';
+            
         } else {
-            console.warn('⚠️ Main upload button not found');
+            console.warn('⚠️ Main upload button not found - checking DOM structure...');
+            const photoGrid = document.getElementById('photo-grid');
+            if (photoGrid) {
+                console.log('Photo grid content:', photoGrid.innerHTML);
+            }
         }
     }
 
